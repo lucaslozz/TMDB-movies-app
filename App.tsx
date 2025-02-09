@@ -1,7 +1,7 @@
 import { ThemeProvider } from "@shopify/restyle";
-import { View } from "react-native";
-import { theme } from "./src/theme";
-import { Box } from "./src/components/Box/Box";
+
+import { Box } from "@components";
+import { theme } from "@theme";
 
 export default function App() {
   return (
