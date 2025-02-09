@@ -1,7 +1,7 @@
-import { ThemeProvider } from "@shopify/restyle";
+import {ThemeProvider} from '@shopify/restyle';
+import {theme} from 'theme';
 
-import { Box } from "@components";
-import { theme } from "@theme";
+import {Box} from '@components';
 
 export default function App() {
   return (
