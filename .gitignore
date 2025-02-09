@@ -34,3 +34,13 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+
+# Yarn
+yarn-error.log
+yarn.lock
+
+# Android
+android/*
+
+# IOS
+ios/*
