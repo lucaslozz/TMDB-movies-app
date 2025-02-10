@@ -1,0 +1,59 @@
+const {withPlugins, withAndroidManifest} = require('@expo/config-plugins');
+
+const fs = require('fs');
+const path = require('path');
+
+// Função recursiva para copiar uma pasta inteira
+const copyFolderRecursiveSync = (source, target) => {
+  if (!fs.existsSync(source)) {
+    throw new Error(`Source folder not found at ${source}`);
+  }
+
+  // Verifica se o destino existe, se não, cria-o
+  if (!fs.existsSync(target)) {
+    fs.mkdirSync(target, {recursive: true});
+  }
+
+  // Copia cada item da pasta de origem para a pasta de destino
+  const items = fs.readdirSync(source);
+  items.forEach(item => {
+    const sourcePath = path.join(source, item);
+    const targetPath = path.join(target, item);
+
+    if (fs.lstatSync(sourcePath).isDirectory()) {
+      // Se for um diretório, chama a função recursivamente
+      copyFolderRecursiveSync(sourcePath, targetPath);
+    } else {
+      // Se for um arquivo, copia-o
+      fs.copyFileSync(sourcePath, targetPath);
+    }
+  });
+};
+
+const withConfigFile = (config, {src, iosDest, androidDest, groupName}) => {
+  return withPlugins(config, [
+    config => withAndroidConfigFile(config, {src, dest: androidDest}),
+  ]);
+};
+
+const withAndroidConfigFile = (config, {src, dest}) => {
+  return withAndroidManifest(config, async config => {
+    const sourcePath = path.resolve(__dirname, src);
+    const destinationPath = path.resolve(
+      config.modRequest.platformProjectRoot,
+      dest,
+    );
+
+    try {
+      // Copia a pasta para o diretório de destino
+      copyFolderRecursiveSync(sourcePath, destinationPath);
+    } catch (error) {
+      console.error(`Error copying folder ${src} to Android:`, error.message);
+      throw error;
+    }
+
+    return config;
+  });
+};
+
+module.exports = withConfigFile;

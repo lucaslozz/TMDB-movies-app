@@ -25,6 +25,17 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "./src/plugins/withConfigFile.js",
+        {
+          "src": "./customFonts/",
+          "iosDest": "fonts",
+          "androidDest": "app/src/main/assets",
+          "groupName": "fonts"
+        }
+      ]
+    ]
   }
 }
