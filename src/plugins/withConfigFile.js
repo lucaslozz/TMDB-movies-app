@@ -1,4 +1,9 @@
-const {withPlugins, withAndroidManifest} = require('@expo/config-plugins');
+const {
+  withPlugins,
+  withXcodeProject,
+  withAndroidManifest,
+  IOSConfig,
+} = require('@expo/config-plugins');
 
 const fs = require('fs');
 const path = require('path');
@@ -33,9 +38,50 @@ const copyFolderRecursiveSync = (source, target) => {
 const withConfigFile = (config, {src, iosDest, androidDest, groupName}) => {
   return withPlugins(config, [
     config => withAndroidConfigFile(config, {src, dest: androidDest}),
+    config => withIOSConfigFile(config, {src, dest: iosDest, groupName}),
   ]);
 };
 
+// Função para copiar arquivos e pastas para iOS
+const withIOSConfigFile = (config, {src, dest, groupName}) => {
+  return withXcodeProject(config, async config => {
+    try {
+      const sourcePath = path.resolve(__dirname, src);
+      const destinationPath = path.resolve(
+        config.modRequest.platformProjectRoot,
+        dest,
+      );
+
+      if (!fs.existsSync(sourcePath)) {
+        throw new Error(`Source folder not found at ${sourcePath}`);
+      }
+
+      // Copia a pasta para o diretório de destino
+      copyFolderRecursiveSync(sourcePath, destinationPath);
+
+      const project = config.modResults;
+
+      // Adiciona cada arquivo da pasta ao grupo no Xcode
+      const items = fs.readdirSync(sourcePath);
+      items.forEach(item => {
+        const itemPath = path.join(destinationPath, item);
+        IOSConfig.XcodeUtils.addResourceFileToGroup({
+          filepath: itemPath,
+          groupName: groupName,
+          isBuildFile: true,
+          project,
+          verbose: true,
+        });
+      });
+    } catch (error) {
+      console.error(`Error copying ${src} to iOS:`, error.message);
+      throw error;
+    }
+    return config;
+  });
+};
+
+// Função para copiar arquivos e pastas para Android
 const withAndroidConfigFile = (config, {src, dest}) => {
   return withAndroidManifest(config, async config => {
     const sourcePath = path.resolve(__dirname, src);

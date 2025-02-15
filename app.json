@@ -14,7 +14,22 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.TMDBmoviesapp"
+      "bundleIdentifier": "com.anonymous.TMDBmoviesapp",
+      "infoPlist": {
+        "UIAppFonts": [
+          "Satoshi-Black-Italic.otf",
+          "Satoshi-Black.otf",
+          "Satoshi-BlackItalic.otf",
+          "Satoshi-Bold.otf",
+          "Satoshi-BoldItalic.otf",
+          "Satoshi-Italic.otf",
+          "Satoshi-Light.otf",
+          "Satoshi-LightItalic.otf",
+          "Satoshi-Medium.otf",
+          "Satoshi-MediumItalic.otf",
+          "Satoshi-Regular.otf"
+        ]
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -32,7 +47,7 @@
         {
           "src": "./customFonts/",
           "iosDest": "fonts",
-          "androidDest": "app/src/main/assets",
+          "androidDest": "app/src/main/assets/fonts",
           "groupName": "fonts"
         }
       ]
