@@ -48,7 +48,7 @@
           "src": "./customFonts/",
           "iosDest": "fonts",
           "androidDest": "app/src/main/assets/fonts",
-          "groupName": "fonts"
+          "groupName": "TMDBmoviesapp/fonts"
         }
       ]
     ]

@@ -42,7 +42,7 @@ const withConfigFile = (config, {src, iosDest, androidDest, groupName}) => {
   ]);
 };
 
-// Função para copiar arquivos e pastas para iOS
+// Function to copy files and folders to iOS
 const withIOSConfigFile = (config, {src, dest, groupName}) => {
   return withXcodeProject(config, async config => {
     try {
@@ -56,18 +56,24 @@ const withIOSConfigFile = (config, {src, dest, groupName}) => {
         throw new Error(`Source folder not found at ${sourcePath}`);
       }
 
-      // Copia a pasta para o diretório de destino
+      // Copy the folder to the destination directory
       copyFolderRecursiveSync(sourcePath, destinationPath);
 
       const project = config.modResults;
 
-      // Adiciona cada arquivo da pasta ao grupo no Xcode
+      // Ensure the group exists in the Xcode project
+      const group = IOSConfig.XcodeUtils.ensureGroupRecursively(
+        project,
+        groupName,
+      );
+
+      // Add each file in the folder to the group in Xcode
       const items = fs.readdirSync(sourcePath);
       items.forEach(item => {
         const itemPath = path.join(destinationPath, item);
         IOSConfig.XcodeUtils.addResourceFileToGroup({
           filepath: itemPath,
-          groupName: groupName,
+          groupName,
           isBuildFile: true,
           project,
           verbose: true,
