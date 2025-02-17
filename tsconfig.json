@@ -12,7 +12,8 @@
       "@plugins": ["plugins"],
       "@services": ["services"],
       "@types": ["types"],
-      "@assets": ["assets"]
+      "@assets": ["assets"],
+      "@routes": ["routes"]
     }
   }
 }
