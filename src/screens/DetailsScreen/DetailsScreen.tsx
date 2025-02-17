@@ -1,13 +1,9 @@
-import {Box, Text} from '@components';
+import {ScreenView, Text} from '@components';
 
 export function DetailsScreen() {
   return (
-    <Box
-      flex={1}
-      justifyContent="center"
-      alignItems="center"
-      backgroundColor="background">
+    <ScreenView>
       <Text preset="headingLarge">Details Screen</Text>
-    </Box>
+    </ScreenView>
   );
 }

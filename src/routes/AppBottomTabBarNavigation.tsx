@@ -5,7 +5,7 @@ import {
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
 
-import {HomeScreen, WatchListScreen} from '@screens';
+import {HomeScreen, SearchScreen, WatchListScreen} from '@screens';
 
 import {AppTabBar} from './AppTabBar';
 
@@ -27,7 +27,7 @@ export function AppTabNavigator() {
         headerShown: false,
       }}>
       <Tab.Screen name="HomeScreen" component={HomeScreen} />
-      <Tab.Screen name="SearchScreen" component={WatchListScreen} />
+      <Tab.Screen name="SearchScreen" component={SearchScreen} />
       <Tab.Screen name="WatchListScreen" component={WatchListScreen} />
     </Tab.Navigator>
   );

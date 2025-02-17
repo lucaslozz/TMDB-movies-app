@@ -1,7 +1,7 @@
 import React from 'react';
 import {Pressable} from 'react-native';
 
-import {BookMarkIcon, HomeIcon, SearchIcon} from '@assets';
+import {ArrowLeftIcon, BookMarkIcon, HomeIcon, SearchIcon} from '@assets';
 
 import {useAppTheme} from '@hooks';
 import {ThemeColors} from '@theme';
@@ -42,6 +42,7 @@ const iconRegistry = {
   home: HomeIcon,
   bookMark: BookMarkIcon,
   search: SearchIcon,
+  arrowLeft: ArrowLeftIcon,
 };
 
 type IconType = typeof iconRegistry;
