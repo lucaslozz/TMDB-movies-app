@@ -5,7 +5,7 @@ import {Box, ScreenView, Text} from '@components';
 export function HomeScreen() {
   return (
     <ScreenView>
-      <PagerView style={{flex: 1}} initialPage={1}>
+      <PagerView style={{flex: 1}} initialPage={0}>
         <Box
           key={1}
           alignContent="center"
