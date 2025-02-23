@@ -36,7 +36,7 @@ export function ScreenView({
       <Container backgroundColor={colors.background}>
         <Box
           paddingHorizontal={noPaddingHorizontal ? undefined : 's24'}
-          style={[{paddingTop: top, paddingBottom: bottom}, style]}
+          style={[{paddingTop: top, paddingBottom: bottom, flex: 1}, style]}
           {...boxProps}>
           <ScreenHeader
             canGoBack={canGoBack}

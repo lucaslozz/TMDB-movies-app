@@ -11,9 +11,10 @@
       "@hooks": ["hooks"],
       "@plugins": ["plugins"],
       "@services": ["services"],
-      "@types": ["types"],
+      "@types": ["@types"],
       "@assets": ["assets"],
-      "@routes": ["routes"]
+      "@routes": ["routes"],
+      "@api": ["api"]
     }
   }
 }
