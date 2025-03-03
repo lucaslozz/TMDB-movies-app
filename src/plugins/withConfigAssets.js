@@ -1,3 +1,6 @@
+/* eslint-disable import/order */
+/* eslint-disable no-undef */
+
 const {
   withPlugins,
   withXcodeProject,
@@ -62,10 +65,7 @@ const withIOSConfigFile = (config, {src, dest, groupName}) => {
       const project = config.modResults;
 
       // Ensure the group exists in the Xcode project
-      const group = IOSConfig.XcodeUtils.ensureGroupRecursively(
-        project,
-        groupName,
-      );
+      IOSConfig.XcodeUtils.ensureGroupRecursively(project, groupName);
 
       // Add each file in the folder to the group in Xcode
       const items = fs.readdirSync(sourcePath);

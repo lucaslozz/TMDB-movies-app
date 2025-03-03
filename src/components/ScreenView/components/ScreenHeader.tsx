@@ -1,8 +1,9 @@
 import React from 'react';
 
 import {useNavigation} from '@react-navigation/native';
-
-import {Box, TouchableOpacityBox, Icon, Text, BoxProps} from '@components';
+import {Box, BoxProps, TouchableOpacityBox} from 'components/Box/Box';
+import {Icon} from 'components/Icon/Icon';
+import {Text} from 'components/Text/Text';
 
 import {ScreenViewProps} from '../ScreenView';
 
