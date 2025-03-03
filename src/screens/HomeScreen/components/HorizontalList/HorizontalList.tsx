@@ -48,6 +48,7 @@ export function HorizontalList({
         contentContainerStyle={{gap: 20}}
         initialNumToRender={10}
         data={movies}
+        pagingEnabled
         renderItem={renderItem}
       />
     </Box>
