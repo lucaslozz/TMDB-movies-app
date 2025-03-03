@@ -1,4 +1,9 @@
 import {api} from '@api';
+import {Page} from '@types';
+import {apiAdapter} from 'api/apiAdapter';
+import {PageAPI} from 'api/apiTypes';
+
+import {Movie} from './moviesModel';
 
 export const MOVIE_BASE_URL = 'movie/';
 
@@ -12,12 +17,12 @@ export function getMovieParams(page: number) {
   };
 }
 
-async function nowPlayingList(page: number): Promise<any> {
-  const {data} = await api.get<any>(`${MOVIE_BASE_URL}now_playing`, {
+async function nowPlayingList(page: number): Promise<Page<Movie>> {
+  const {data} = await api.get<PageAPI<Movie>>(`${MOVIE_BASE_URL}now_playing`, {
     params: getMovieParams(page),
   });
 
-  return data;
+  return apiAdapter.toPageModel(data, movie => movie);
 }
 
 export const moviesService = {nowPlayingList};

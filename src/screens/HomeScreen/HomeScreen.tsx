@@ -1,25 +1,21 @@
+import {useEffect, useState} from 'react';
+
+import {moviesService} from '@services';
+import {useQuery} from '@tanstack/react-query';
+import MovieCard from 'components/MovieCard/MovieCard';
 import PagerView from 'react-native-pager-view';
 
 import {Box, ScreenView, Text} from '@components';
+import {usePaginatedList} from '@hooks';
 
 export function HomeScreen() {
+  const {list} = usePaginatedList(['nowPlaying'], moviesService.nowPlayingList);
+
   return (
-    <ScreenView>
-      <PagerView style={{flex: 1}} initialPage={0}>
-        <Box
-          key={1}
-          alignContent="center"
-          justifyContent="center"
-          backgroundColor="error">
-          <Text>Page 1</Text>
-        </Box>
-        <Box key={2} alignContent="center" justifyContent="center">
-          <Text>Page 2</Text>
-        </Box>
-        <Box key={3} alignContent="center" justifyContent="center">
-          <Text>Page 3</Text>
-        </Box>
-      </PagerView>
+    <ScreenView scrollable>
+      {list.map(movie => (
+        <MovieCard key={movie.id} movie={movie} onPress={() => {}} />
+      ))}
     </ScreenView>
   );
 }

@@ -35,7 +35,7 @@ export function usePaginatedList<Data>(
     initialPageParam: 1,
     queryFn: ({pageParam}) => getList(pageParam),
     getNextPageParam: ({meta}) =>
-      meta.hasNextPage ? meta.currentPage + 1 : undefined,
+      meta?.hasNextPage ? meta.currentPage + 1 : undefined,
     enabled: options?.enabled,
     staleTime: options?.staleTime,
   });

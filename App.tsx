@@ -1,6 +1,3 @@
-import {useEffect} from 'react';
-
-import {moviesService} from '@services';
 import {ThemeProvider} from '@shopify/restyle';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {authService} from 'services/auth/authService';
@@ -15,20 +12,6 @@ authService.updateToken(
 );
 
 export default function App() {
-  async function getMovies() {
-    try {
-      const {data} = await moviesService.nowPlayingList(1);
-
-      console.log(data);
-    } catch {
-      console.log('error');
-    }
-  }
-
-  useEffect(() => {
-    getMovies();
-  }, []);
-
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
