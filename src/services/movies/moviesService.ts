@@ -41,4 +41,20 @@ async function trendingAllList(page: number): Promise<Page<Movie>> {
   return apiAdapter.toPageModel(data, movie => movie);
 }
 
-export const moviesService = {nowPlayingList, popularList, trendingAllList};
+async function recommendations(
+  page: number,
+  movieId: string,
+): Promise<Page<Movie>> {
+  const {data} = await api.get<PageAPI<Movie>>(`${movieId}/recommendations`, {
+    params: getMovieParams(page),
+  });
+
+  return apiAdapter.toPageModel(data, movie => movie);
+}
+
+export const moviesService = {
+  nowPlayingList,
+  popularList,
+  trendingAllList,
+  recommendations,
+};

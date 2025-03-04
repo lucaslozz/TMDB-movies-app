@@ -31,18 +31,18 @@ export function usePaginatedList<Data>(
   const [list, setList] = useState<Data[]>([]);
 
   const query = useInfiniteQuery({
-    queryKey,
+    queryKey: ['teste'],
     initialPageParam: 1,
     queryFn: ({pageParam}) => getList(pageParam),
-    getNextPageParam: ({meta}) =>
-      meta?.hasNextPage ? meta.currentPage + 1 : undefined,
+    getNextPageParam: lastPage =>
+      lastPage.meta?.hasNextPage ? lastPage.meta.currentPage + 1 : null,
     enabled: options?.enabled,
     staleTime: options?.staleTime,
   });
 
   useEffect(() => {
     if (query.data) {
-      const newList = query.data.pages.flatMap(page => page.data);
+      const newList = query.data.pages?.flatMap(page => page.data);
 
       setList(newList);
     }

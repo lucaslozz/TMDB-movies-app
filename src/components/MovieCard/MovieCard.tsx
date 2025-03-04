@@ -1,3 +1,4 @@
+import {useNavigation} from '@react-navigation/native';
 import {Box, TouchableOpacityBox} from 'components/Box/Box';
 import {ProgressImageView} from 'components/ProgressImageView/ProgressImageView';
 import {Text} from 'components/Text/Text';
@@ -6,12 +7,16 @@ import {Movie} from 'services/movies';
 
 export type MovieCardProps = {
   movie: Movie;
-  onPress: () => void;
 };
 
-export const MovieCard = ({movie, onPress}: MovieCardProps) => {
+export const MovieCard = ({movie}: MovieCardProps) => {
+  const navigation = useNavigation();
+
   return (
-    <TouchableOpacityBox onPress={onPress}>
+    <TouchableOpacityBox
+      onPress={() => {
+        navigation.navigate('DetailsScreen', {movie});
+      }}>
       <Box width={170} gap="s8">
         <ProgressImageView
           imageUri={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}

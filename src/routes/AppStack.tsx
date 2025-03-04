@@ -1,15 +1,36 @@
 import React from 'react';
 
 import {NavigatorScreenParams} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {
+  createNativeStackNavigator,
+  NativeStackScreenProps,
+} from '@react-navigation/native-stack';
+import {Movie} from '@services';
+import {Page} from '@types';
+
+import {AllListScreen, DetailsScreen} from '@screens';
 
 import {
   AppBottomTabParamList,
   AppTabNavigator,
 } from './AppBottomTabBarNavigation';
 
+export type AppScreenProps<RouteName extends keyof AppStackParamList> =
+  NativeStackScreenProps<AppStackParamList, RouteName>;
+
+export interface AllListScreenProps {
+  queryKey: string;
+  queryFn: (page: number) => Promise<Page<Movie>>;
+}
+
+export interface DetailsScreenProps {
+  movie: Movie;
+}
+
 export type AppStackParamList = {
   AppTabNavigator: NavigatorScreenParams<AppBottomTabParamList>;
+  AllListScreen: AllListScreenProps;
+  DetailsScreen: DetailsScreenProps;
 };
 
 const Stack = createNativeStackNavigator<AppStackParamList>();
@@ -27,6 +48,8 @@ export function AppStack({initialRouteName = 'AppTabNavigator'}: Props) {
       }}
       initialRouteName={initialRouteName}>
       <Stack.Screen name="AppTabNavigator" component={AppTabNavigator} />
+      <Stack.Screen name="AllListScreen" component={AllListScreen} />
+      <Stack.Screen name="DetailsScreen" component={DetailsScreen} />
     </Stack.Navigator>
   );
 }

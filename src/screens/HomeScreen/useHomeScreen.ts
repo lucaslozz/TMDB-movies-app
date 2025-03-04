@@ -1,25 +1,31 @@
-import {moviesService} from '@services';
+import {useNavigation} from '@react-navigation/native';
+import {Movie, moviesService} from '@services';
 import {useQueries} from '@tanstack/react-query';
+import {Page} from '@types';
+import {movieQueries} from 'infra';
+import {QueryKeys} from 'infra/queryKeys/queryKeys';
 
 export function useHomeScreen() {
+  const navigation = useNavigation();
+
   const queries = useQueries({
-    queries: [
-      {
-        queryKey: ['trendingAllList'],
-        queryFn: () => moviesService.trendingAllList(1),
-        staleTime: 1000 * 60 * 5,
-      },
-      {
-        queryKey: ['popularList'],
-        queryFn: () => moviesService.popularList(1),
-        staleTime: 1000 * 60 * 5,
-      },
-    ],
+    queries: [movieQueries.popular(), movieQueries.trendingAllList()],
   });
+
+  function onNavigateToAllListScreen(
+    queryFn: (page: number) => Promise<Page<Movie>>,
+    queryKey: string,
+  ) {
+    navigation.navigate('AllListScreen', {
+      queryFn,
+      queryKey,
+    });
+  }
 
   return {
     nowPlaying: queries[0].data?.data,
     popularList: queries[1].data?.data,
     isLoading: queries.some(query => query.isLoading),
+    onNavigateToAllListScreen,
   };
 }

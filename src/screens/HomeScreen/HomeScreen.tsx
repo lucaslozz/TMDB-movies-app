@@ -1,13 +1,14 @@
 import {moviesService} from '@services';
+import {QueryKeys} from 'infra/queryKeys/queryKeys';
 
 import {ScreenView} from '@components';
-import {usePaginatedList} from '@hooks';
 
 import {HorizontalList} from './components';
 import {useHomeScreen} from './useHomeScreen';
 
 export function HomeScreen() {
-  const {nowPlaying, popularList, isLoading} = useHomeScreen();
+  const {nowPlaying, popularList, isLoading, onNavigateToAllListScreen} =
+    useHomeScreen();
 
   if (isLoading) return null;
   return (
@@ -15,16 +16,24 @@ export function HomeScreen() {
       <HorizontalList
         title="Tendências"
         movies={nowPlaying ?? []}
-        onPress={() => {}}
-        onSeeAllPress={() => {}}
+        onSeeAllPress={() =>
+          onNavigateToAllListScreen(
+            moviesService.trendingAllList,
+            QueryKeys.INFINITY_TRENDING,
+          )
+        }
         marginBottom="s32"
       />
 
       <HorizontalList
         title="Popular"
         movies={popularList ?? []}
-        onPress={() => {}}
-        onSeeAllPress={() => {}}
+        onSeeAllPress={() =>
+          onNavigateToAllListScreen(
+            moviesService.popularList,
+            QueryKeys.INFINITY_POPULAR,
+          )
+        }
       />
     </ScreenView>
   );

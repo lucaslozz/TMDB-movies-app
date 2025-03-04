@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
-import {ActivityIndicator, Image, StyleSheet, Text, View} from 'react-native';
+import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
 
+import {Image} from 'expo-image';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 
 type ImageViewWithProgressProps = {
@@ -47,7 +48,9 @@ export const ProgressImageView = ({
           source={{
             uri: imageUri,
           }}
+          contentFit="cover"
           onLoadEnd={() => setImageLoading(false)}
+          cachePolicy="memory"
         />
         {imageLoading && (
           <ActivityIndicator
@@ -81,7 +84,6 @@ const styles = StyleSheet.create({
   },
   image: {
     ...StyleSheet.absoluteFillObject,
-    resizeMode: 'cover',
     borderRadius: 15,
   },
   progressViewText: {
