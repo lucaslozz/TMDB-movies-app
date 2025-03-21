@@ -1,46 +1,30 @@
 import {FlatList, Image, StyleSheet, Text, View} from 'react-native';
 
-import {useQuery} from '@tanstack/react-query';
+import {Cast} from '@services';
 
 import CastListShimmer from './components/CastListShimmer/CastListShimmer';
-
-export interface Cast {
-  adult: boolean;
-  gender: number;
-  id: number;
-  known_for_department: string;
-  name: string;
-  original_name: string;
-  popularity: number;
-  profile_path?: string;
-  credit_id: string;
-  department?: string;
-  character: string;
-  job?: string;
-}
 
 type CastSectionListProps = {
   title: string;
   id: number;
   type: string;
+  castList: Cast[];
+  error: boolean;
+  loading: boolean;
 };
 
-export const CastSectionList = ({title, id, type}: CastSectionListProps) => {
-  const {
-    isPending: loading,
-    error,
-    data: casts,
-  } = useQuery({
-    queryKey: ['fetchCasts', id],
-    queryFn: () => {},
-  });
-
+export const CastSectionList = ({
+  title,
+  castList,
+  error,
+  loading,
+}: CastSectionListProps) => {
   if (error) {
     return <Text>An Error occur</Text>;
   }
   return (
     <View style={styles.container}>
-      {(loading || casts?.length > 0) && (
+      {(loading || castList?.length > 0) && (
         <Text style={styles.title}>{title}</Text>
       )}
       {loading ? (
@@ -48,9 +32,10 @@ export const CastSectionList = ({title, id, type}: CastSectionListProps) => {
       ) : (
         <FlatList
           renderItem={({item}) => <Item item={item} />}
-          data={[]}
-          keyExtractor={item => item?.id?.toString()}
+          data={castList}
+          keyExtractor={item => item?.cast_id?.toString() ?? ''}
           horizontal
+          pagingEnabled
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{paddingHorizontal: 10}}
           ItemSeparatorComponent={ItemSeparator}
@@ -65,7 +50,10 @@ const ItemSeparator = () => (
 );
 
 type ItemProps = {item: Cast};
+
 const Item = ({item}: ItemProps) => {
+  if (!item.profile_path) return null;
+
   return (
     <View style={styles.itemContainer}>
       <Image

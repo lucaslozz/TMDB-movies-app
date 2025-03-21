@@ -11,19 +11,24 @@ import {
 } from 'react-native';
 
 import {Ionicons} from '@expo/vector-icons';
+import {useNavigation} from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {LinearGradient} from 'expo-linear-gradient';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 
-import {CastSectionList, ImageView, RecommendationsList} from './components';
-import {AppScreenProps} from '@routes';
-import {useNavigation} from '@react-navigation/native';
 import {useAppSafeArea} from '@hooks';
+import {AppScreenProps} from '@routes';
+
+import {CastSectionList, ImageView, RecommendationsList} from './components';
+import {useDetailsScreen} from './useDetailsScreen';
 
 export function DetailsScreen({route}: AppScreenProps<'DetailsScreen'>) {
   const {movie} = route.params;
   const navigation = useNavigation();
   const {top} = useAppSafeArea();
+
+  const {castQuery} = useDetailsScreen(route.params.movie.id.toString());
+
   // const setFavoriteMovie = useFavoriteStore(state => state.setMovie);
   // const removeFavoriteMovies = useFavoriteStore(state => state.removeMovie);
   // const isFavorite = useFavoriteStore(state => state.checkMovie(movie.id));
@@ -67,15 +72,15 @@ export function DetailsScreen({route}: AppScreenProps<'DetailsScreen'>) {
             </TouchableOpacity>
           </View>
 
-          {/* <View style={styles.circleButton}>
-            <TouchableOpacity onPress={toogleFavorite}>
+          <View style={styles.circleButton}>
+            <TouchableOpacity onPress={undefined}>
               <Ionicons
-                name={isFavorite ? 'heart' : 'heart-outline'}
+                name={true ? 'heart' : 'heart-outline'}
                 size={24}
                 color="white"
               />
             </TouchableOpacity>
-          </View> */}
+          </View>
         </View>
         <Image
           style={styles.backdropImage}
@@ -197,6 +202,9 @@ export function DetailsScreen({route}: AppScreenProps<'DetailsScreen'>) {
         title="Top Casts"
         id={movie.id}
         type={movie.title == null ? 'tv' : 'movie'}
+        castList={castQuery.data?.cast ?? []}
+        loading={castQuery.isLoading}
+        error={false}
       />
       <RecommendationsList
         type={movie.title ? 'movie' : 'tv'}
