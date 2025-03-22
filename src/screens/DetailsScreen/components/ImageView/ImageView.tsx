@@ -1,4 +1,6 @@
-import {Image, ImageStyle, StyleSheet} from 'react-native';
+import {ImageStyle, StyleSheet} from 'react-native';
+
+import {Image} from 'expo-image';
 
 type ImageViewProps = {
   style: ImageStyle;
@@ -6,7 +8,13 @@ type ImageViewProps = {
 };
 
 export const ImageView = ({style, imageUri}: ImageViewProps) => {
-  return <Image source={{uri: imageUri}} style={[styles.image, style]} />;
+  return (
+    <Image
+      source={{uri: imageUri}}
+      style={[styles.image, style]}
+      cachePolicy="memory"
+    />
+  );
 };
 
 const styles = StyleSheet.create({

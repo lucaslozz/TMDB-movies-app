@@ -12,11 +12,11 @@ import {
 
 import {Ionicons} from '@expo/vector-icons';
 import {useNavigation} from '@react-navigation/native';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {LinearGradient} from 'expo-linear-gradient';
+import moment from 'moment';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 
-import {useAppSafeArea} from '@hooks';
+import {useAppSafeArea, useAppTheme} from '@hooks';
 import {AppScreenProps} from '@routes';
 
 import {CastSectionList, ImageView, RecommendationsList} from './components';
@@ -26,8 +26,10 @@ export function DetailsScreen({route}: AppScreenProps<'DetailsScreen'>) {
   const {movie} = route.params;
   const navigation = useNavigation();
   const {top} = useAppSafeArea();
-
-  const {castQuery} = useDetailsScreen(route.params.movie.id.toString());
+  const {colors} = useAppTheme();
+  const {castList, isLoading, recommendationList} = useDetailsScreen(
+    route.params.movie.id.toString(),
+  );
 
   // const setFavoriteMovie = useFavoriteStore(state => state.setMovie);
   // const removeFavoriteMovies = useFavoriteStore(state => state.removeMovie);
@@ -63,7 +65,9 @@ export function DetailsScreen({route}: AppScreenProps<'DetailsScreen'>) {
   }, [movie.vote_average]);
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+    <ScrollView
+      style={[styles.container, {backgroundColor: colors.background}]}
+      showsVerticalScrollIndicator={false}>
       <View style={styles.imageContainer}>
         <View style={[styles.topButtonContainer, {top}]}>
           <View style={styles.circleButton}>
@@ -98,7 +102,6 @@ export function DetailsScreen({route}: AppScreenProps<'DetailsScreen'>) {
           end={{x: 1, y: 0}}
           locations={[0.2, 0.5, 1]}
           style={{
-            position: 'absolute',
             ...StyleSheet.absoluteFillObject,
           }}
         />
@@ -117,9 +120,9 @@ export function DetailsScreen({route}: AppScreenProps<'DetailsScreen'>) {
           <View style={{flex: 1, gap: 10}}>
             <Text style={{fontSize: 24, fontWeight: 'bold', color: 'white'}}>
               {movie.title ?? movie.name} (
-              {new Date(
-                movie.release_date ?? movie.first_air_date,
-              ).getFullYear()}
+              {moment(movie.release_date ?? movie.first_air_date).format(
+                'YYYY',
+              )}
               )
             </Text>
             <View
@@ -202,13 +205,15 @@ export function DetailsScreen({route}: AppScreenProps<'DetailsScreen'>) {
         title="Top Casts"
         id={movie.id}
         type={movie.title == null ? 'tv' : 'movie'}
-        castList={castQuery.data?.cast ?? []}
-        loading={castQuery.isLoading}
+        castList={castList}
+        loading={isLoading}
         error={false}
       />
       <RecommendationsList
         type={movie.title ? 'movie' : 'tv'}
         movieId={movie.id}
+        isLoading={isLoading}
+        recommendationList={recommendationList}
       />
     </ScrollView>
   );
@@ -217,14 +222,12 @@ export function DetailsScreen({route}: AppScreenProps<'DetailsScreen'>) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
   },
   imageContainer: {
     width: '100%',
     padding: 15,
   },
   backdropImage: {
-    position: 'absolute',
     ...StyleSheet.absoluteFillObject,
     resizeMode: 'cover',
   },

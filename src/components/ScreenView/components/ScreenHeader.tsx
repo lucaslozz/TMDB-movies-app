@@ -7,22 +7,18 @@ import {Text} from 'components/Text/Text';
 
 import {ScreenViewProps} from '../ScreenView';
 
-type ScreenHeaderProps = Pick<
-  ScreenViewProps,
-  'canGoBack' | 'title' | 'HeaderComponent'
-> &
+type ScreenHeaderProps = Pick<ScreenViewProps, 'canGoBack' | 'title'> &
   BoxProps;
 
 const ICON_SIZE = 20;
 export function ScreenHeader({
   canGoBack,
   title,
-  HeaderComponent,
   ...boxProps
 }: ScreenHeaderProps) {
   const navigation = useNavigation();
 
-  const showBackLabel = !title && !HeaderComponent;
+  const showBackLabel = !title;
   return (
     <Box
       alignItems="center"
@@ -45,7 +41,7 @@ export function ScreenHeader({
           )}
         </TouchableOpacityBox>
       )}
-      {HeaderComponent && HeaderComponent}
+
       {title && <Text preset="headingSmall">{title}</Text>}
       {title && <Box width={ICON_SIZE} />}
     </Box>

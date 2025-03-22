@@ -41,13 +41,13 @@ async function trendingAllList(page: number): Promise<Page<Movie>> {
   return apiAdapter.toPageModel(data, movie => movie);
 }
 
-async function recommendations(
-  page: number,
-  movieId: string,
-): Promise<Page<Movie>> {
-  const {data} = await api.get<PageAPI<Movie>>(`${movieId}/recommendations`, {
-    params: getMovieParams(page),
-  });
+async function recommendations(movieId: string): Promise<Page<Movie>> {
+  const {data} = await api.get<PageAPI<Movie>>(
+    `${MOVIE_BASE_URL}${movieId}/recommendations`,
+    {
+      params: getMovieParams(1),
+    },
+  );
 
   return apiAdapter.toPageModel(data, movie => movie);
 }

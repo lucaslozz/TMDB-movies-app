@@ -9,7 +9,7 @@ export function useHomeScreen() {
   const navigation = useNavigation();
 
   const queries = useQueries({
-    queries: [movieQueries.popular(), movieQueries.trendingAllList()],
+    queries: [movieQueries.nowPlaying(), movieQueries.popular()],
   });
 
   function onNavigateToAllListScreen(

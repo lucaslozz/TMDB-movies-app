@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '800',
     margin: 10,
+    color: 'white',
   },
   itemContainer: {
     gap: 5,
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
   itemTitle: {
     fontSize: 14,
     fontWeight: '600',
-    color: 'black',
+    color: 'white',
     marginTop: 5,
   },
   itemDate: {

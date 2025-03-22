@@ -1,44 +1,36 @@
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 
-import {useQuery} from '@tanstack/react-query';
+import {Movie} from '@services';
 
-import {MovieCard} from '@components';
+import {MovieCard, Text} from '@components';
 
 import {MovieShimmerList} from './components';
 
 type RecommendationsListProps = {
   movieId: number;
   type: string;
+  isLoading: boolean;
+  recommendationList: Movie[];
 };
 
 export const RecommendationsList = ({
-  movieId,
-  type,
+  isLoading,
+  recommendationList,
 }: RecommendationsListProps) => {
-  const {
-    isPending: loading,
-    error,
-    data: movies,
-  } = useQuery({
-    queryKey: ['fetchSimilarMoviesorTv', type, movieId],
-    queryFn: async () => {},
-  });
-
-  if (error) {
-    return <Text>Error loading movies</Text>;
-  }
-
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Recommendations</Text>
-      {loading ? (
+      <Text preset="headingSmall" marginBottom="s16" marginLeft="s16">
+        Recommendations
+      </Text>
+      {isLoading ? (
         <MovieShimmerList />
       ) : (
         <FlatList
-          renderItem={({item}) => <MovieCard movie={item} onPress={() => {}} />}
-          data={[]}
+          renderItem={({item}) => <MovieCard movie={item} />}
+          data={recommendationList}
           keyExtractor={item => item?.id.toString() ?? ''}
           horizontal
+          pagingEnabled
           ItemSeparatorComponent={ItemSeparator}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{paddingHorizontal: 10}}
@@ -56,19 +48,13 @@ const ItemSeparator = () => (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginVertical: 15,
+    marginVertical: 16,
   },
   headerText: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginHorizontal: 10,
-    marginBottom: 10,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: '800',
-    marginHorizontal: 15,
     marginBottom: 10,
   },
 });
