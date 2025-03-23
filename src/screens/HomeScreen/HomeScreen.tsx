@@ -1,4 +1,5 @@
 import {moviesService} from '@services';
+import {LoadingIndicator} from 'components/LoadingIndicator/LoadingIndicator';
 import {QueryKeys} from 'infra/queryKeys/queryKeys';
 
 import {ScreenView} from '@components';

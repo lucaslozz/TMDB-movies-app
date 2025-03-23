@@ -7,7 +7,9 @@ import {
 } from '@react-navigation/native-stack';
 import {Movie} from '@services';
 import {Page} from '@types';
+import {LoadingIndicator} from 'components/LoadingIndicator/LoadingIndicator';
 
+import {Box} from '@components';
 import {AllListScreen, DetailsScreen} from '@screens';
 
 import {
@@ -41,15 +43,18 @@ interface Props {
 
 export function AppStack({initialRouteName = 'AppTabNavigator'}: Props) {
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-        fullScreenGestureEnabled: true,
-      }}
-      initialRouteName={initialRouteName}>
-      <Stack.Screen name="AppTabNavigator" component={AppTabNavigator} />
-      <Stack.Screen name="AllListScreen" component={AllListScreen} />
-      <Stack.Screen name="DetailsScreen" component={DetailsScreen} />
-    </Stack.Navigator>
+    <Box flex={1}>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+          fullScreenGestureEnabled: true,
+        }}
+        initialRouteName={initialRouteName}>
+        <Stack.Screen name="AppTabNavigator" component={AppTabNavigator} />
+        <Stack.Screen name="AllListScreen" component={AllListScreen} />
+        <Stack.Screen name="DetailsScreen" component={DetailsScreen} />
+      </Stack.Navigator>
+      <LoadingIndicator />
+    </Box>
   );
 }
