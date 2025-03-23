@@ -7,9 +7,8 @@ import {
 } from '@react-navigation/native-stack';
 import {Movie} from '@services';
 import {Page} from '@types';
-import {LoadingIndicator} from 'components/LoadingIndicator/LoadingIndicator';
 
-import {Box} from '@components';
+import {Box, LoadingIndicator} from '@components';
 import {AllListScreen, DetailsScreen} from '@screens';
 
 import {

@@ -4,3 +4,4 @@ export * from './Icon/Icon';
 export * from './ScreenView/ScreenView';
 export * from './ProgressImageView/ProgressImageView';
 export * from './MovieCard/MovieCard';
+export * from './LoadingIndicator/LoadingIndicator';

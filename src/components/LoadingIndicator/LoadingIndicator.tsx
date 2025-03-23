@@ -6,9 +6,9 @@ import Modal from 'react-native-modal';
 import {useLoadingIndicator} from './useLoadingIndicator';
 
 export function LoadingIndicator() {
-  const {animatedStyle} = useLoadingIndicator();
+  const {animatedStyle, isLoading} = useLoadingIndicator();
   return (
-    <Modal isVisible>
+    <Modal isVisible={isLoading}>
       <Box flex={1} justifyContent="center" alignItems="center">
         <Box
           width={100}
@@ -16,23 +16,19 @@ export function LoadingIndicator() {
           justifyContent="center"
           alignItems="center">
           <AnimatedBox style={animatedStyle}>
-            <Box style={styles.loader} />
+            <Box
+              width={50}
+              height={50}
+              borderWidth={5}
+              borderRadius="sAll"
+              borderTopColor="primary"
+              borderRightColor="primaryContrast"
+              borderBottomColor="primary"
+              borderLeftColor="primary"
+            />
           </AnimatedBox>
         </Box>
       </Box>
     </Modal>
   );
 }
-
-const styles = StyleSheet.create({
-  loader: {
-    width: 50,
-    height: 50,
-    borderWidth: 5,
-    borderTopColor: '#00C853', // Substitua pela cor correspondente ao theme.colors.primary_shamrock
-    borderRightColor: '#FFFFFF', // Substitua pela cor correspondente ao theme.colors.white
-    borderLeftColor: '#00C853', // Substitua pela cor correspondente ao theme.colors.primary_shamrock
-    borderBottomColor: '#00C853', // Substitua pela cor correspondente ao theme.colors.primary_shamrock
-    borderRadius: 25,
-  },
-});

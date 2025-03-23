@@ -8,7 +8,10 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 
+import {useLoading} from '@hooks';
+
 export function useLoadingIndicator() {
+  const isLoading = useLoading();
   const rotateAnim = useSharedValue(0);
 
   useEffect(() => {
@@ -30,5 +33,6 @@ export function useLoadingIndicator() {
 
   return {
     animatedStyle,
+    isLoading,
   };
 }
