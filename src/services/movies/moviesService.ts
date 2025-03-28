@@ -52,9 +52,20 @@ async function recommendations(movieId: string): Promise<Page<Movie>> {
   return apiAdapter.toPageModel(data, movie => movie);
 }
 
+async function watchList(movieId: string, watchlist: boolean) {
+  await new Promise(resolve => setTimeout(resolve, 5000));
+
+  await api.post(`account/19691371/watchlist`, {
+    media_type: 'movie',
+    media_id: movieId,
+    watchlist,
+  });
+}
+
 export const moviesService = {
   nowPlayingList,
   popularList,
   trendingAllList,
   recommendations,
+  watchList,
 };

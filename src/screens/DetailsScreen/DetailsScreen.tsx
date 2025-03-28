@@ -27,20 +27,9 @@ export function DetailsScreen({route}: AppScreenProps<'DetailsScreen'>) {
   const navigation = useNavigation();
   const {top} = useAppSafeArea();
   const {colors} = useAppTheme();
-  const {castList, isLoading, recommendationList} = useDetailsScreen(
-    route.params.movie.id.toString(),
-  );
+  const {castList, isLoading, recommendationList, toggleFavorite} =
+    useDetailsScreen(route.params.movie.id.toString());
 
-  // const setFavoriteMovie = useFavoriteStore(state => state.setMovie);
-  // const removeFavoriteMovies = useFavoriteStore(state => state.removeMovie);
-  // const isFavorite = useFavoriteStore(state => state.checkMovie(movie.id));
-  // const toogleFavorite = useCallback(() => {
-  //   if (isFavorite) {
-  //     removeFavoriteMovies(movie.id);
-  //   } else {
-  //     setFavoriteMovie(movie);
-  //   }
-  // }, [movie.id, isFavorite, removeFavoriteMovies, setFavoriteMovie]);
   const handleOpenURL = useCallback(async () => {
     const url = `https://www.themoviedb.org/${
       movie.title == null ? 'tv' : 'movie'
@@ -77,7 +66,10 @@ export function DetailsScreen({route}: AppScreenProps<'DetailsScreen'>) {
           </View>
 
           <View style={styles.circleButton}>
-            <TouchableOpacity onPress={undefined}>
+            <TouchableOpacity
+              onPress={() =>
+                toggleFavorite({movieId: movie.id.toString(), watchList: true})
+              }>
               <Ionicons
                 name={true ? 'heart' : 'heart-outline'}
                 size={24}
