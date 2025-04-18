@@ -1,57 +1,27 @@
 import React from 'react';
-import {Alert, Image, Linking, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import {useNavigation} from '@react-navigation/native';
 import {LinearGradient} from 'expo-linear-gradient';
 import moment from 'moment';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 import {Box} from '@components';
+import {Movie} from '@services';
 
 import {useAppSafeArea} from '@hooks';
 import {ImageView} from '../ImageView/ImageView';
+import {useMovieHeader} from './useMovieHeader';
 
 type MovieHeaderProps = {
-  movie: {
-    id: number;
-    title?: string;
-    name?: string;
-    backdrop_path: string;
-    poster_path: string;
-    overview?: string;
-    vote_average: number;
-    release_date?: string;
-    first_air_date?: string;
-  };
+  movie: Movie;
   onToggleFavorite: (params: {movieId: string; watchList: boolean}) => void;
 };
 
 export function MovieHeader({movie, onToggleFavorite}: MovieHeaderProps) {
   const navigation = useNavigation();
   const {top} = useAppSafeArea();
-
-  const progressColor = (() => {
-    if (movie.vote_average >= 7) return '#26CA67';
-    if (movie.vote_average >= 4) return '#C9CF26';
-    return '#CF004E';
-  })();
-
-  const backgroundColor = (() => {
-    if (movie.vote_average >= 7) return '#19361E';
-    if (movie.vote_average >= 4) return '#322F0D';
-    return '#440C28';
-  })();
-
-  const handleOpenURL = async () => {
-    const url = `https://www.themoviedb.org/${
-      movie.title == null ? 'tv' : 'movie'
-    }/${movie.id}`;
-    const supported = await Linking.canOpenURL(url);
-    if (supported) {
-      Linking.openURL(url);
-    } else {
-      Alert.alert('Error', 'Cannot open URL');
-    }
-  };
+  const {progressColor, backgroundColor, handleOpenURL, handleToggleFavorite} =
+    useMovieHeader({movie, onToggleFavorite});
 
   return (
     <Box style={styles.imageContainer}>
@@ -63,10 +33,7 @@ export function MovieHeader({movie, onToggleFavorite}: MovieHeaderProps) {
         </Box>
 
         <Box style={styles.circleButton}>
-          <TouchableOpacity
-            onPress={() =>
-              onToggleFavorite({movieId: movie.id.toString(), watchList: true})
-            }>
+          <TouchableOpacity onPress={handleToggleFavorite}>
             <Ionicons
               name={true ? 'heart' : 'heart-outline'}
               size={24}
