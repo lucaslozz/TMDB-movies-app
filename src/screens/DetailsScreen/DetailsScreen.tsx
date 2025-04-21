@@ -34,7 +34,7 @@ export function DetailsScreen({route}: AppScreenProps<'DetailsScreen'>) {
       <MovieHeader movie={movie} onToggleFavorite={toggleFavorite} />
 
       <CastSectionList
-        title="Top Casts"
+        title="Elenco Principal"
         id={movie.id}
         type={movie.title == null ? 'tv' : 'movie'}
         castList={castList}

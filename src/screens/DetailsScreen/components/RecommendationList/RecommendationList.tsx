@@ -20,7 +20,7 @@ export const RecommendationsList = ({
   return (
     <View style={styles.container}>
       <Text preset="headingSmall" marginBottom="s16" marginLeft="s16">
-        Recommendations
+        Recomendações
       </Text>
       {isLoading ? (
         <MovieShimmerList />

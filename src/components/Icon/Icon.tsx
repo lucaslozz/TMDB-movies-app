@@ -5,6 +5,7 @@ import {
   ArrowLeftIcon,
   BookMarkIcon,
   HomeIcon,
+  MinusIcon,
   PlusIcon,
   SearchIcon,
 } from '@assets';
@@ -50,6 +51,7 @@ const iconRegistry = {
   search: SearchIcon,
   arrowLeft: ArrowLeftIcon,
   plus: PlusIcon,
+  minus: MinusIcon,
 };
 
 type IconType = typeof iconRegistry;

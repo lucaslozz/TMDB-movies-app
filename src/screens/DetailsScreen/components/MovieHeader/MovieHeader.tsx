@@ -121,8 +121,9 @@ export function MovieHeader({movie, onToggleFavorite}: MovieHeaderProps) {
           {movie.overview && (
             <>
               <Box style={{flexDirection: 'row', gap: 5, alignItems: 'center'}}>
-                <Text style={{fontSize: 18, fontWeight: 'bold', color: 'white'}}>
-                  Overview
+                <Text
+                  style={{fontSize: 18, fontWeight: 'bold', color: 'white'}}>
+                  Resumo
                 </Text>
                 <Ionicons name="information-circle" size={20} color="white" />
               </Box>
@@ -185,4 +186,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-}); 
+});

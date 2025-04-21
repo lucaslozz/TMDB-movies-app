@@ -1,4 +1,11 @@
-import {BottomSheet, Box, Button, Icon, Text} from '@components';
+import {
+  BottomSheet,
+  Box,
+  Button,
+  Icon,
+  Text,
+  TouchableOpacityBox,
+} from '@components';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
 
 interface RatingModalProps {
@@ -19,26 +26,26 @@ export function RatingModal({bottomSheetModalRef}: RatingModalProps) {
         </Box>
 
         <Box flexDirection="row">
-          <Box
+          <TouchableOpacityBox
             width={40}
             height={40}
-            backgroundColor="gray300"
+            backgroundColor="primary"
             marginLeft="s16"
             borderRadius="sAll"
             alignItems="center"
             justifyContent="center">
             <Icon name="plus" color="grayWhite" />
-          </Box>
-          <Box
+          </TouchableOpacityBox>
+          <TouchableOpacityBox
             width={40}
             height={40}
-            backgroundColor="gray300"
+            backgroundColor="primary"
             marginLeft="s16"
             borderRadius="sAll"
             alignItems="center"
             justifyContent="center">
-            <Icon name="search" color="grayWhite" />
-          </Box>
+            <Icon name="minus" color="grayWhite" />
+          </TouchableOpacityBox>
         </Box>
       </Box>
 
