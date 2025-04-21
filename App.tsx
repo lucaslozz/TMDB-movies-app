@@ -6,6 +6,8 @@ import {authService} from 'services/auth/authService';
 import {theme} from 'theme';
 
 import {Router} from '@routes';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 
 export const queryClient = new QueryClient();
 
@@ -17,10 +19,14 @@ moment.locale('pt-br');
 
 export default function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={theme}>
-        <Router />
-      </ThemeProvider>
-    </QueryClientProvider>
+    <ThemeProvider theme={theme}>
+      <GestureHandlerRootView style={{flex: 1}}>
+        <BottomSheetModalProvider>
+          <QueryClientProvider client={queryClient}>
+            <Router />
+          </QueryClientProvider>
+        </BottomSheetModalProvider>
+      </GestureHandlerRootView>
+    </ThemeProvider>
   );
 }

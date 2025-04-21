@@ -59,9 +59,9 @@ export function AppTabBar({state, descriptors, navigation}: BottomTabBarProps) {
             <Icon
               size={24}
               name={tabItem.icon[`${isFocused ? 'focused' : 'unfocused'}`]}
-              color={isFocused ? 'primary' : 'primaryDark'}
+              color={isFocused ? 'grayWhite' : 'primaryDark'}
             />
-            <Text color={isFocused ? 'primary' : 'primaryDark'} {...$label}>
+            <Text color={isFocused ? 'grayWhite' : 'primaryDark'} {...$label}>
               {tabItem.label}
             </Text>
           </TouchableOpacityBox>

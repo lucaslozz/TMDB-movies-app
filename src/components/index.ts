@@ -5,3 +5,5 @@ export * from './ScreenView/ScreenView';
 export * from './ProgressImageView/ProgressImageView';
 export * from './MovieCard/MovieCard';
 export * from './LoadingIndicator/LoadingIndicator';
+export * from './BottomSheet/BottomSheet';
+export * from './Button/Button';

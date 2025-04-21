@@ -1,17 +1,31 @@
-
 import {ScrollView, StyleSheet} from 'react-native';
 
-import {useAppTheme} from '@hooks';
+import {useAppTheme, useModal} from '@hooks';
 import {AppScreenProps} from '@routes';
 
-import {CastSectionList, MovieHeader, RecommendationsList} from './components';
+import {
+  CastSectionList,
+  MovieHeader,
+  RatingModal,
+  RecommendationsList,
+} from './components';
 import {useDetailsScreen} from './useDetailsScreen';
+import {BottomSheet} from 'components/BottomSheet/BottomSheet';
+import {Box, Icon, Text} from '@components';
+import {useEffect} from 'react';
 
 export function DetailsScreen({route}: AppScreenProps<'DetailsScreen'>) {
   const {movie} = route.params;
   const {colors} = useAppTheme();
+
   const {castList, isLoading, recommendationList, toggleFavorite} =
     useDetailsScreen(route.params.movie.id.toString());
+
+  const {bottomSheetModalRef, show} = useModal();
+
+  useEffect(() => {
+    show();
+  }, []);
 
   return (
     <ScrollView
@@ -33,6 +47,7 @@ export function DetailsScreen({route}: AppScreenProps<'DetailsScreen'>) {
         isLoading={isLoading}
         recommendationList={recommendationList}
       />
+      <RatingModal bottomSheetModalRef={bottomSheetModalRef} />
     </ScrollView>
   );
 }

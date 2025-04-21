@@ -9,7 +9,7 @@ export const palette = {
   charcoal: '#242A32',
   darkSlate: '#3A3F47',
   graphite: '#67686D',
-  skyBlue: '#0296E5',
+  midnightBlue: '#5A5A7A',
 
   gray100: '#EEEEEE',
   gray200: '#EBEBEF',
@@ -23,13 +23,13 @@ export const palette = {
 export const theme = createTheme({
   colors: {
     ...palette,
-    primary: palette.skyBlue,
+    primary: palette.midnightBlue,
     primaryContrast: palette.grayWhite,
     primaryLight: palette.gray100,
     primaryMedium: palette.gray200,
     primaryDark: palette.gray300,
 
-    buttonPrimary: palette.skyBlue,
+    buttonPrimary: palette.midnightBlue,
 
     background: palette.charcoal,
     backgroundContrast: palette.darkSlate,
@@ -68,7 +68,7 @@ export const theme = createTheme({
 
 export const $shadowProps: ViewStyle = {
   elevation: 10,
-  shadowColor: '#0296E5',
+  shadowColor: '#5A5A7A',
   shadowOpacity: 0.09,
   shadowRadius: 2,
   shadowOffset: {width: 0, height: -3},

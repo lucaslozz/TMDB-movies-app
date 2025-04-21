@@ -64,7 +64,7 @@ function getFontFamily(
       return $fontFamily.regular;
   }
 }
-type TextVariants =
+export type TextVariants =
   | 'headingLarge'
   | 'headingMedium'
   | 'headingSmall'
