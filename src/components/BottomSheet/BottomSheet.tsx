@@ -1,14 +1,13 @@
-import React, {
-  forwardRef,
-  useImperativeHandle,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, {forwardRef, useCallback} from 'react';
 
-import {BottomSheetModal, BottomSheetView} from '@gorhom/bottom-sheet';
+import {
+  BottomSheetBackdrop,
+  BottomSheetModal,
+  BottomSheetView,
+} from '@gorhom/bottom-sheet';
+import {BottomSheetDefaultBackdropProps} from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop/types';
 
-import {useAppSafeArea} from '@hooks';
+import {useBottomSheet} from './useBottomSheet';
 
 export interface BottomSheetRef {
   open: (children: React.ReactNode) => void;
@@ -16,26 +15,27 @@ export interface BottomSheetRef {
 }
 
 export const BottomSheet = forwardRef<BottomSheetRef>((_, ref) => {
-  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-  const [content, setContent] = useState<React.ReactNode>(null);
+  const {bottomSheetModalRef, content, snapPoints} = useBottomSheet(ref);
 
-  const snapPoints = useMemo(() => ['50%', '75%'], []);
-
-  useImperativeHandle(ref, () => ({
-    open: (children: React.ReactNode) => {
-      setContent(children);
-      bottomSheetModalRef.current?.present();
-    },
-    close: () => {
-      bottomSheetModalRef.current?.dismiss();
-      setContent(null);
-    },
-  }));
+  const renderBackdrop = useCallback(
+    (props: BottomSheetDefaultBackdropProps) => (
+      <BottomSheetBackdrop
+        appearsOnIndex={0}
+        disappearsOnIndex={-1}
+        {...props}
+      />
+    ),
+    [],
+  );
 
   return (
-    <BottomSheetModal ref={bottomSheetModalRef} snapPoints={snapPoints}>
+    <BottomSheetModal
+      ref={bottomSheetModalRef}
+      snapPoints={snapPoints}
+      backdropComponent={renderBackdrop}
+      enablePanDownToClose>
       <BottomSheetView
-        style={{flex: 1, paddingHorizontal: 16, paddingBottom: 20}}>
+        style={{flex: 1, paddingHorizontal: 16, paddingBottom: 100}}>
         {content}
       </BottomSheetView>
     </BottomSheetModal>
