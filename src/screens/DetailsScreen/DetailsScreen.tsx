@@ -1,5 +1,9 @@
-import {ScrollView, StyleSheet} from 'react-native';
+import {useEffect} from 'react';
+import {InteractionManager, ScrollView, StyleSheet} from 'react-native';
 
+import {BottomSheet} from 'components/BottomSheet/BottomSheet';
+
+import {Box, Button, Icon, Text} from '@components';
 import {useAppTheme, useModal} from '@hooks';
 import {AppScreenProps} from '@routes';
 
@@ -10,9 +14,6 @@ import {
   RecommendationsList,
 } from './components';
 import {useDetailsScreen} from './useDetailsScreen';
-import {BottomSheet} from 'components/BottomSheet/BottomSheet';
-import {Box, Icon, Text} from '@components';
-import {useEffect} from 'react';
 
 export function DetailsScreen({route}: AppScreenProps<'DetailsScreen'>) {
   const {movie} = route.params;
@@ -21,18 +22,15 @@ export function DetailsScreen({route}: AppScreenProps<'DetailsScreen'>) {
   const {castList, isLoading, recommendationList, toggleFavorite} =
     useDetailsScreen(route.params.movie.id.toString());
 
-  const {bottomSheetModalRef, show} = useModal();
-
-  useEffect(() => {
-    show();
-  }, []);
+  const {show, dismiss} = useModal();
 
   return (
     <ScrollView
       style={[styles.container, {backgroundColor: colors.background}]}
       showsVerticalScrollIndicator={false}>
       <MovieHeader movie={movie} onToggleFavorite={toggleFavorite} />
-
+      <Button title="open" onPress={() => show(<RatingModal />)} mb="s16" />
+      <Button title="close" onPress={dismiss} />
       <CastSectionList
         title="Elenco Principal"
         id={movie.id}
@@ -47,7 +45,6 @@ export function DetailsScreen({route}: AppScreenProps<'DetailsScreen'>) {
         isLoading={isLoading}
         recommendationList={recommendationList}
       />
-      <RatingModal bottomSheetModalRef={bottomSheetModalRef} />
     </ScrollView>
   );
 }

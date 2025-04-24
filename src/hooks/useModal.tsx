@@ -1,16 +1,15 @@
-import {BottomSheetModal} from '@gorhom/bottom-sheet';
-import {useCallback, useRef} from 'react';
+import {useCallback} from 'react';
+
+import {bottomSheetRef} from '@routes';
 
 export function useModal() {
-  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-
-  const show = useCallback(() => {
-    bottomSheetModalRef.current?.present();
+  const show = useCallback((children: React.ReactNode) => {
+    bottomSheetRef.current?.open(children);
   }, []);
 
   const dismiss = useCallback(() => {
-    bottomSheetModalRef.current?.dismiss();
+    bottomSheetRef.current?.close();
   }, []);
 
-  return {show, dismiss, bottomSheetModalRef};
+  return {show, dismiss};
 }
