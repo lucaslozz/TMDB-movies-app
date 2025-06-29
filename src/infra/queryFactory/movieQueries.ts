@@ -27,4 +27,10 @@ export const movieQueries = {
       queryFn: () => moviesService.nowPlayingList(1),
       staleTime: oneHour,
     }),
+  watchlist: (page: number) =>
+    queryOptions({
+      queryKey: ['watchlist', page],
+      queryFn: () => moviesService.getWatchlistMovies(page),
+      staleTime: oneHour,
+    }),
 };

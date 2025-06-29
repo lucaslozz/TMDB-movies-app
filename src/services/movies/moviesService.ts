@@ -62,10 +62,22 @@ async function watchList(movieId: string, watchlist: boolean) {
   });
 }
 
+async function getWatchlistMovies(page: number): Promise<Page<Movie>> {
+  const {data} = await api.get<PageAPI<Movie>>(
+    `account/19691371/watchlist/movies`,
+    {
+      params: getMovieParams(page),
+    },
+  );
+
+  return apiAdapter.toPageModel(data, movie => movie);
+}
+
 export const moviesService = {
   nowPlayingList,
   popularList,
   trendingAllList,
   recommendations,
   watchList,
+  getWatchlistMovies,
 };
