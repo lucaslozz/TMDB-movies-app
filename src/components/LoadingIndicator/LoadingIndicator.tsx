@@ -1,5 +1,3 @@
-import {StyleSheet} from 'react-native';
-
 import {AnimatedBox, Box} from 'components/Box/Box';
 import Modal from 'react-native-modal';
 

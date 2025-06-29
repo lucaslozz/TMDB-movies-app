@@ -1,15 +1,18 @@
 import React from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
+
 import {Ionicons} from '@expo/vector-icons';
 import {useNavigation} from '@react-navigation/native';
+import {Movie} from '@services';
 import {LinearGradient} from 'expo-linear-gradient';
 import moment from 'moment';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
-import {Box} from '@components';
-import {Movie} from '@services';
 
+import {Box} from '@components';
 import {useAppSafeArea} from '@hooks';
+
 import {ImageView} from '../ImageView/ImageView';
+
 import {useMovieHeader} from './useMovieHeader';
 
 type MovieHeaderProps = {
@@ -34,11 +37,7 @@ export function MovieHeader({movie, onToggleFavorite}: MovieHeaderProps) {
 
         <Box style={styles.circleButton}>
           <TouchableOpacity onPress={handleToggleFavorite}>
-            <Ionicons
-              name={true ? 'heart' : 'heart-outline'}
-              size={24}
-              color="white"
-            />
+            <Ionicons name="heart-outline" size={24} color="white" />
           </TouchableOpacity>
         </Box>
       </Box>
@@ -102,7 +101,7 @@ export function MovieHeader({movie, onToggleFavorite}: MovieHeaderProps) {
                 onAnimationComplete={() => console.log('onAnimationComplete')}
                 backgroundColor={backgroundColor}
                 rotation={0}>
-                {_ => (
+                {(_: number) => (
                   <Text
                     style={{
                       fontSize: 12,

@@ -1,5 +1,6 @@
 import {useCallback} from 'react';
 import {Alert, Linking} from 'react-native';
+
 import {Movie} from '@services';
 
 type UseMovieHeaderProps = {
@@ -42,4 +43,4 @@ export function useMovieHeader({movie, onToggleFavorite}: UseMovieHeaderProps) {
     handleOpenURL,
     handleToggleFavorite,
   };
-} 
+}

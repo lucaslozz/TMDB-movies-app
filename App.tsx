@@ -1,13 +1,13 @@
+import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {ThemeProvider} from '@shopify/restyle';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import 'moment/locale/pt-br';
 import moment from 'moment';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {authService} from 'services/auth/authService';
 import {theme} from 'theme';
 
 import {Router} from '@routes';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 
 export const queryClient = new QueryClient();
 

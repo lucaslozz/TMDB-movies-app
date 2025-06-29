@@ -1,9 +1,6 @@
-import {useEffect} from 'react';
-import {InteractionManager, ScrollView, StyleSheet} from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
 
-import {BottomSheet} from 'components/BottomSheet/BottomSheet';
-
-import {Box, Button, Icon, Text} from '@components';
+import {Button} from '@components';
 import {useAppTheme, useModal} from '@hooks';
 import {AppScreenProps} from '@routes';
 

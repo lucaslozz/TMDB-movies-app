@@ -1,1 +1,1 @@
-export * from './CastListShimmer/CastListShimmer';
+export {default as CastListShimmer} from './CastListShimmer/CastListShimmer';

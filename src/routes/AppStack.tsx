@@ -1,4 +1,4 @@
-import React, {createRef} from 'react';
+import React from 'react';
 
 import {NavigatorScreenParams} from '@react-navigation/native';
 import {
@@ -8,16 +8,15 @@ import {
 import {Movie} from '@services';
 import {Page} from '@types';
 
-import {BottomSheet, BottomSheetRef, Box, LoadingIndicator} from '@components';
-import {useModal} from '@hooks';
+import {BottomSheet, Box, LoadingIndicator} from '@components';
 import {AllListScreen, DetailsScreen} from '@screens';
+
+import {bottomSheetRef} from '../components/BottomSheet/bottomSheetRef';
 
 import {
   AppBottomTabParamList,
   AppTabNavigator,
 } from './AppBottomTabBarNavigation';
-
-export const bottomSheetRef = createRef<BottomSheetRef>();
 
 export type AppScreenProps<RouteName extends keyof AppStackParamList> =
   NativeStackScreenProps<AppStackParamList, RouteName>;

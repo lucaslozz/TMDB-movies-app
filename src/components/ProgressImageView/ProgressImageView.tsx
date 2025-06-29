@@ -66,7 +66,7 @@ export const ProgressImageView = ({
           tintColor={progressColor}
           backgroundColor={backgroundColor}
           rotation={0}>
-          {_ => (
+          {(_: number) => (
             <Text style={styles.progressViewText}>
               {(progress * 10).toFixed() + '%'}
             </Text>

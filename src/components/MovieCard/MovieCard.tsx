@@ -7,16 +7,22 @@ import {Movie} from 'services/movies';
 
 export type MovieCardProps = {
   movie: Movie;
+  onPress?: () => void;
 };
 
-export const MovieCard = ({movie}: MovieCardProps) => {
+export const MovieCard = ({movie, onPress}: MovieCardProps) => {
   const navigation = useNavigation();
 
+  const handlePress = () => {
+    if (onPress) {
+      onPress();
+    } else {
+      navigation.navigate('DetailsScreen', {movie});
+    }
+  };
+
   return (
-    <TouchableOpacityBox
-      onPress={() => {
-        navigation.navigate('DetailsScreen', {movie});
-      }}>
+    <TouchableOpacityBox onPress={handlePress}>
       <Box width={170} gap="s8">
         <ProgressImageView
           imageUri={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}

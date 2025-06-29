@@ -8,12 +8,15 @@ import {Text} from 'components/Text/Text';
 import {ScreenViewProps} from '../ScreenView';
 
 type ScreenHeaderProps = Pick<ScreenViewProps, 'canGoBack' | 'title'> &
-  BoxProps;
+  BoxProps & {
+    HeaderComponent?: React.ReactNode;
+  };
 
 const ICON_SIZE = 20;
 export function ScreenHeader({
   canGoBack,
   title,
+  HeaderComponent,
   ...boxProps
 }: ScreenHeaderProps) {
   const navigation = useNavigation();
@@ -43,6 +46,7 @@ export function ScreenHeader({
       )}
 
       {title && <Text preset="headingSmall">{title}</Text>}
+      {HeaderComponent && HeaderComponent}
       {title && <Box width={ICON_SIZE} />}
     </Box>
   );

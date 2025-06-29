@@ -1,6 +1,6 @@
 import {useCallback} from 'react';
 
-import {bottomSheetRef} from '@routes';
+import {bottomSheetRef} from '../components/BottomSheet/bottomSheetRef';
 
 export function useModal() {
   const show = useCallback((children: React.ReactNode) => {

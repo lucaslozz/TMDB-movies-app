@@ -1,13 +1,4 @@
-import {BottomSheetModal} from '@gorhom/bottom-sheet';
-
-import {
-  BottomSheet,
-  Box,
-  Button,
-  Icon,
-  Text,
-  TouchableOpacityBox,
-} from '@components';
+import {Box, Icon, Text, TouchableOpacityBox} from '@components';
 
 export function RatingModal() {
   return (
