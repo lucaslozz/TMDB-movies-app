@@ -1,6 +1,6 @@
 import {api} from '@api';
 
-import {CastResponseAPI} from './castModel';
+import {CastResponseAPI, Person} from './castModel';
 
 function baseURL(movieId: string) {
   return `movie/${movieId}/credits`;
@@ -12,4 +12,10 @@ async function castList(movieId: string): Promise<CastResponseAPI> {
   return data;
 }
 
-export const castService = {castList};
+async function personDetails(personId: string): Promise<Person> {
+  const {data} = await api.get<Promise<Person>>(`person/${personId}`);
+
+  return data;
+}
+
+export const castService = {castList, personDetails};

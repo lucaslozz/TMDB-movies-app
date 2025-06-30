@@ -9,7 +9,7 @@ import {Movie} from '@services';
 import {Page} from '@types';
 
 import {BottomSheet, Box, LoadingIndicator} from '@components';
-import {AllListScreen, DetailsScreen} from '@screens';
+import {AllListScreen, CastDetailsScreen, DetailsScreen} from '@screens';
 
 import {bottomSheetRef} from '../components/BottomSheet/bottomSheetRef';
 
@@ -30,10 +30,15 @@ export interface DetailsScreenProps {
   movie: Movie;
 }
 
+export interface CastDetailsScreenProps {
+  personId: string;
+}
+
 export type AppStackParamList = {
   AppTabNavigator: NavigatorScreenParams<AppBottomTabParamList>;
   AllListScreen: AllListScreenProps;
   DetailsScreen: DetailsScreenProps;
+  CastDetailsScreen: CastDetailsScreenProps;
 };
 
 const Stack = createNativeStackNavigator<AppStackParamList>();
@@ -54,6 +59,7 @@ export function AppStack({initialRouteName = 'AppTabNavigator'}: Props) {
         <Stack.Screen name="AppTabNavigator" component={AppTabNavigator} />
         <Stack.Screen name="AllListScreen" component={AllListScreen} />
         <Stack.Screen name="DetailsScreen" component={DetailsScreen} />
+        <Stack.Screen name="CastDetailsScreen" component={CastDetailsScreen} />
       </Stack.Navigator>
       <LoadingIndicator />
       <BottomSheet ref={bottomSheetRef} />

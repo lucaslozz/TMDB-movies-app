@@ -9,4 +9,10 @@ export const castQueries = {
       queryFn: () => castService.castList(id),
       staleTime: oneHour,
     }),
+  personDetails: (id: string) =>
+    queryOptions({
+      queryKey: ['personDetails', id],
+      queryFn: () => castService.personDetails(id),
+      staleTime: oneHour,
+    }),
 };

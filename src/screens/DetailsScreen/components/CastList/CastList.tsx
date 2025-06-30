@@ -1,6 +1,10 @@
 import {FlatList, Image, StyleSheet, Text, View} from 'react-native';
 
+import {useNavigation} from '@react-navigation/native';
 import {Cast} from '@services';
+import {AppScreenProps} from 'routes/AppStack';
+
+import {TouchableOpacityBox} from '@components';
 
 import CastListShimmer from './components/CastListShimmer/CastListShimmer';
 
@@ -52,10 +56,19 @@ const ItemSeparator = () => (
 type ItemProps = {item: Cast};
 
 const Item = ({item}: ItemProps) => {
+  const navigation =
+    useNavigation<AppScreenProps<'CastDetailsScreen'>['navigation']>();
+
   if (!item.profile_path) return null;
 
+  const handlePress = () => {
+    if (item.id) {
+      navigation.navigate('CastDetailsScreen', {personId: item.id.toString()});
+    }
+  };
+
   return (
-    <View style={styles.itemContainer}>
+    <TouchableOpacityBox style={styles.itemContainer} onPress={handlePress}>
       <Image
         style={styles.image}
         source={{
@@ -68,7 +81,7 @@ const Item = ({item}: ItemProps) => {
       <Text numberOfLines={2} style={styles.itemDate}>
         {item.character}
       </Text>
-    </View>
+    </TouchableOpacityBox>
   );
 };
 
