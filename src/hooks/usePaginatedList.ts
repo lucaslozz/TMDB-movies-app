@@ -31,7 +31,7 @@ export function usePaginatedList<Data>(
   const [list, setList] = useState<Data[]>([]);
 
   const query = useInfiniteQuery({
-    queryKey: ['teste'],
+    queryKey: [queryKey],
     initialPageParam: 1,
     queryFn: ({pageParam}) => getList(pageParam),
     getNextPageParam: lastPage =>

@@ -1,11 +1,12 @@
 import {moviesService} from '@services';
-import {useMutation, useQueries} from '@tanstack/react-query';
+import {useMutation, useQueries, useQueryClient} from '@tanstack/react-query';
 import {castQueries, movieQueries} from 'infra/queryFactory';
 
 import {useLoadingAction} from '@hooks';
 
 export function useDetailsScreen(movieId: string) {
   const setLoading = useLoadingAction();
+  const queryClient = useQueryClient();
 
   const {mutate: toggleFavorite, isPending} = useMutation<
     void,
@@ -14,17 +15,14 @@ export function useDetailsScreen(movieId: string) {
   >({
     mutationFn: ({movieId, watchList}) =>
       moviesService.watchList(movieId, watchList),
-    onMutate() {
-      setLoading(true);
-    },
+
     onSuccess: () => {
-      //TODO: set up query invalidation to update the watchlist status
+      queryClient.invalidateQueries({
+        queryKey: ['watchlist'],
+      });
     },
     onError: () => {
       //TODO: set up error handling
-    },
-    onSettled() {
-      setLoading(false);
     },
   });
 
