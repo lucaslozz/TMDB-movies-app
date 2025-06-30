@@ -1,6 +1,5 @@
 import {ScrollView, StyleSheet} from 'react-native';
 
-import {Button} from '@components';
 import {useAppTheme, useModal} from '@hooks';
 import {AppScreenProps} from '@routes';
 
@@ -16,18 +15,29 @@ export function DetailsScreen({route}: AppScreenProps<'DetailsScreen'>) {
   const {movie} = route.params;
   const {colors} = useAppTheme();
 
-  const {castList, isLoading, recommendationList, toggleFavorite} =
-    useDetailsScreen(route.params.movie.id.toString());
+  const {
+    castList,
+    isLoading,
+    recommendationList,
+    toggleFavorite,
+    handleRateMovie,
+  } = useDetailsScreen(route.params.movie.id.toString());
 
   const {show, dismiss} = useModal();
+
+  const handleOpenRating = () => {
+    show(<RatingModal onSubmit={handleRateMovie} onClose={dismiss} />);
+  };
 
   return (
     <ScrollView
       style={[styles.container, {backgroundColor: colors.background}]}
       showsVerticalScrollIndicator={false}>
-      <MovieHeader movie={movie} onToggleFavorite={toggleFavorite} />
-      <Button title="open" onPress={() => show(<RatingModal />)} mb="s16" />
-      <Button title="close" onPress={dismiss} />
+      <MovieHeader
+        movie={movie}
+        onToggleFavorite={toggleFavorite}
+        onOpenRating={handleOpenRating}
+      />
       <CastSectionList
         title="Elenco Principal"
         id={movie.id}

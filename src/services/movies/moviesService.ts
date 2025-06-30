@@ -73,6 +73,10 @@ async function getWatchlistMovies(page: number): Promise<Page<Movie>> {
   return apiAdapter.toPageModel(data, movie => movie);
 }
 
+async function rateMovie(movieId: string, rating: number): Promise<void> {
+  await api.post(`${MOVIE_BASE_URL}${movieId}/rating`, {value: rating});
+}
+
 export const moviesService = {
   nowPlayingList,
   popularList,
@@ -80,4 +84,5 @@ export const moviesService = {
   recommendations,
   watchList,
   getWatchlistMovies,
+  rateMovie,
 };

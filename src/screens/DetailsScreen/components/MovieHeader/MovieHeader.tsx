@@ -18,9 +18,14 @@ import {useMovieHeader} from './useMovieHeader';
 type MovieHeaderProps = {
   movie: Movie;
   onToggleFavorite: (params: {movieId: string; watchList: boolean}) => void;
+  onOpenRating: () => void;
 };
 
-export function MovieHeader({movie, onToggleFavorite}: MovieHeaderProps) {
+export function MovieHeader({
+  movie,
+  onToggleFavorite,
+  onOpenRating,
+}: MovieHeaderProps) {
   const navigation = useNavigation();
   const {top} = useAppSafeArea();
   const {progressColor, backgroundColor, handleOpenURL, handleToggleFavorite} =
@@ -116,6 +121,9 @@ export function MovieHeader({movie, onToggleFavorite}: MovieHeaderProps) {
             <Text style={{color: 'white', fontWeight: 'bold'}}>
               {'User\nScore'}
             </Text>
+            <TouchableOpacity onPress={onOpenRating} style={{marginLeft: 8}}>
+              <Ionicons name="star" size={24} color="#FFD700" />
+            </TouchableOpacity>
           </Box>
           {movie.overview && (
             <>

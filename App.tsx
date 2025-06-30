@@ -4,6 +4,7 @@ import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import 'moment/locale/pt-br';
 import moment from 'moment';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {authService} from 'services/auth/authService';
 import {theme} from 'theme';
 
@@ -19,14 +20,16 @@ moment.locale('pt-br');
 
 export default function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <GestureHandlerRootView style={{flex: 1}}>
-        <BottomSheetModalProvider>
-          <QueryClientProvider client={queryClient}>
-            <Router />
-          </QueryClientProvider>
-        </BottomSheetModalProvider>
-      </GestureHandlerRootView>
-    </ThemeProvider>
+    <SafeAreaProvider>
+      <ThemeProvider theme={theme}>
+        <GestureHandlerRootView style={{flex: 1}}>
+          <BottomSheetModalProvider>
+            <QueryClientProvider client={queryClient}>
+              <Router />
+            </QueryClientProvider>
+          </BottomSheetModalProvider>
+        </GestureHandlerRootView>
+      </ThemeProvider>
+    </SafeAreaProvider>
   );
 }

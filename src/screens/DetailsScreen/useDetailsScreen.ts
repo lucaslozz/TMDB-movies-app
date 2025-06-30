@@ -4,9 +4,13 @@ import {castQueries, movieQueries} from 'infra/queryFactory';
 
 import {useLoadingAction} from '@hooks';
 
+import {useRating} from './hooks/useRating';
+
 export function useDetailsScreen(movieId: string) {
   const setLoading = useLoadingAction();
   const queryClient = useQueryClient();
+
+  const {handleRateMovie} = useRating(movieId);
 
   const {mutate: toggleFavorite, isPending} = useMutation<
     void,
@@ -46,5 +50,6 @@ export function useDetailsScreen(movieId: string) {
     castList,
     recommendationList,
     toggleFavorite,
+    handleRateMovie,
   };
 }
