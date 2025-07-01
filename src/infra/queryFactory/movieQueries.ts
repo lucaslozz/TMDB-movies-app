@@ -39,4 +39,10 @@ export const movieQueries = {
       queryFn: () => moviesService.upcomingList(1),
       staleTime: oneHour,
     }),
+  topRated: () =>
+    queryOptions({
+      queryKey: ['topRated'],
+      queryFn: () => moviesService.topRatedList(1),
+      staleTime: oneHour,
+    }),
 };

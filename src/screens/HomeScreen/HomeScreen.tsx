@@ -11,6 +11,7 @@ export function HomeScreen() {
     nowPlaying,
     popularList,
     upcomingList,
+    topRatedList,
     isLoading,
     onNavigateToAllListScreen,
   } = useHomeScreen();
@@ -49,6 +50,18 @@ export function HomeScreen() {
           onNavigateToAllListScreen(
             moviesService.upcomingList,
             QueryKeys.INFINITY_UPCOMING,
+          )
+        }
+        marginBottom="s32"
+      />
+
+      <HorizontalList
+        title="Melhores Avaliados"
+        movies={topRatedList ?? []}
+        onSeeAllPress={() =>
+          onNavigateToAllListScreen(
+            moviesService.topRatedList,
+            QueryKeys.INFINITY_TOP_RATED,
           )
         }
       />

@@ -81,6 +81,14 @@ async function upcomingList(page: number): Promise<Page<Movie>> {
   return apiAdapter.toPageModel(data, movie => movie);
 }
 
+async function topRatedList(page: number): Promise<Page<Movie>> {
+  const {data} = await api.get<PageAPI<Movie>>(`${MOVIE_BASE_URL}top_rated`, {
+    params: getMovieParams(page),
+  });
+
+  return apiAdapter.toPageModel(data, movie => movie);
+}
+
 async function rateMovie(movieId: string, rating: number): Promise<void> {
   await api.post(`${MOVIE_BASE_URL}${movieId}/rating`, {value: rating});
 }
@@ -94,4 +102,5 @@ export const moviesService = {
   getWatchlistMovies,
   rateMovie,
   upcomingList,
+  topRatedList,
 };
