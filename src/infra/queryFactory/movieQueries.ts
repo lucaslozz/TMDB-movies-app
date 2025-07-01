@@ -21,6 +21,12 @@ export const movieQueries = {
       queryFn: () => moviesService.recommendations(movieId),
       staleTime: halfHour,
     }),
+  movieKeywords: (movieId: string) =>
+    queryOptions({
+      queryKey: ['movieKeywords', movieId],
+      queryFn: () => moviesService.getMovieKeywords(movieId),
+      staleTime: 1000 * 60 * 5,
+    }),
   nowPlaying: () =>
     queryOptions({
       queryKey: ['nowPlaying'],

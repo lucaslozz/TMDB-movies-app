@@ -30,15 +30,17 @@ export function useDetailsScreen(movieId: string) {
     },
   });
 
-  const {castList, isLoading, recommendationList} = useQueries({
+  const {castList, isLoading, recommendationList, keywords} = useQueries({
     queries: [
       castQueries.castList(movieId),
       movieQueries.recommendationMovie(movieId),
+      movieQueries.movieKeywords(movieId),
     ],
     combine(result) {
       return {
         castList: result[0].data?.cast ?? [],
         recommendationList: result[1].data?.data ?? [],
+        keywords: result[2].data?.keywords ?? [],
         isLoading: result.some(query => query.isLoading),
       };
     },
@@ -49,6 +51,7 @@ export function useDetailsScreen(movieId: string) {
     isLoading,
     castList,
     recommendationList,
+    keywords,
     toggleFavorite,
     handleRateMovie,
   };

@@ -3,7 +3,7 @@ import {Page} from '@types';
 import {apiAdapter} from 'api/apiAdapter';
 import {PageAPI} from 'api/apiTypes';
 
-import {Movie} from './moviesModel';
+import {Movie, MovieKeywordsResponse} from './moviesModel';
 
 export const MOVIE_BASE_URL = 'movie/';
 
@@ -15,6 +15,16 @@ export function getMovieParams(page: number) {
     sort_by: 'popularity.desc',
     page,
   };
+}
+
+async function getMovieKeywords(
+  movieId: string,
+): Promise<MovieKeywordsResponse> {
+  const {data} = await api.get<MovieKeywordsResponse>(
+    `${MOVIE_BASE_URL}${movieId}/keywords`,
+  );
+
+  return data;
 }
 
 async function nowPlayingList(page: number): Promise<Page<Movie>> {
@@ -103,4 +113,5 @@ export const moviesService = {
   rateMovie,
   upcomingList,
   topRatedList,
+  getMovieKeywords,
 };

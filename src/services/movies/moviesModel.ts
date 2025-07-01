@@ -17,3 +17,13 @@ export interface Movie {
   vote_count: number;
   first_air_date?: string;
 }
+
+export interface Keyword {
+  id: number;
+  name: string;
+}
+
+export interface MovieKeywordsResponse {
+  id: number;
+  keywords: Keyword[];
+}

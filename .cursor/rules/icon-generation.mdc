@@ -1,0 +1,211 @@
+# Icon Generation Rule - TMDB App
+
+## Overview
+
+This rule defines the standardized process for creating React Native icon components from SVG files in the TMDB movies app.
+
+## When to Use
+
+- When a new SVG file is added to `src/assets/icons/`
+- When converting existing SVG files to React Native components
+- When creating new icon components that follow the app's pattern
+
+## File Naming Convention
+
+- SVG file: `kebab-case.svg` (e.g., `arrow-right.svg`)
+- Component file: `PascalCaseIcon.tsx` (e.g., `ArrowRightIcon.tsx`)
+
+## Component Generation Steps
+
+### 1. Analyze the SVG
+
+First, examine the SVG to determine if it uses:
+
+- **Stroke-based**: Has `stroke` attribute (not "none")
+- **Fill-based**: Has `fill` attribute (not "none")
+
+### 2. Create the Component File
+
+**Template Structure:**
+
+```typescript
+import React from 'react';
+
+import {Svg, [SvgElements]} from 'react-native-svg';
+
+import {IconBase} from '../../components/Icon/Icon';
+
+export function [IconName]({size = 20, color = 'black'}: IconBase) {
+  return (
+    <Svg width={size} height={size} viewBox="[original-viewBox]" fill="none">
+      {/* SVG content with color props */}
+    </Svg>
+  );
+}
+```
+
+### 3. SVG Element Conversion Rules
+
+#### For Stroke-Based SVGs:
+
+- Replace `stroke="#color"` with `stroke={color}`
+- Keep `stroke-width`, `stroke-linecap`, `stroke-linejoin`
+- Keep `fill="none"`
+
+**Example:**
+
+```tsx
+<Path
+  d="[path-data]"
+  stroke={color}
+  strokeWidth="2"
+  strokeLinecap="round"
+  strokeLinejoin="round"
+/>
+```
+
+#### For Fill-Based SVGs:
+
+- Replace `fill="#color"` with `fill={color}`
+- Keep other attributes like `fillRule`, `clipRule`
+
+**Example:**
+
+```tsx
+<Rect x="6.125" width="1.75" height="13" rx="0.875" fill={color} />
+```
+
+### 4. SVG Elements Import
+
+Import only the SVG elements you need:
+
+- `Path` - most common
+- `Rect` - rectangles
+- `Circle` - circles
+- `G` - groups
+- `Defs`, `ClipPath` - for complex paths
+
+### 5. Integration Steps
+
+#### A. Export in Assets Index
+
+Add to `src/assets/index.ts`:
+
+```typescript
+export * from './icons/[IconName]';
+```
+
+#### B. Import in Icon Component
+
+Add to `src/components/Icon/Icon.tsx`:
+
+```typescript
+import {
+  // ... existing imports
+  [IconName],
+} from '@assets';
+```
+
+#### C. Register in Icon Registry
+
+Add to the `iconRegistry` object:
+
+```typescript
+const iconRegistry = {
+  // ... existing entries
+  [camelCaseName]: [IconName],
+};
+```
+
+#### D. TypeScript Integration
+
+The `IconName` type will automatically update based on the `iconRegistry` keys.
+
+## Complete Example
+
+### Input SVG (`star.svg`):
+
+```svg
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+  <path d="M10 1L13 7H19L14 11L16 19L10 15L4 19L6 11L1 7H7L10 1Z" stroke="#0296E5" stroke-width="2"/>
+</svg>
+```
+
+### Generated Component (`StarIcon.tsx`):
+
+```typescript
+import React from 'react';
+
+import {Svg, Path} from 'react-native-svg';
+
+import {IconBase} from '../../components/Icon/Icon';
+
+export function StarIcon({size = 20, color = 'black'}: IconBase) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 20 20" fill="none">
+      <Path
+        d="M10 1L13 7H19L14 11L16 19L10 15L4 19L6 11L1 7H7L10 1Z"
+        stroke={color}
+        strokeWidth="2"
+      />
+    </Svg>
+  );
+}
+```
+
+### Integration Updates:
+
+**`src/assets/index.ts`:**
+
+```typescript
+export * from './icons/StarIcon';
+```
+
+**`src/components/Icon/Icon.tsx`:**
+
+```typescript
+import {
+  // ... existing imports
+  StarIcon,
+} from '@assets';
+
+const iconRegistry = {
+  // ... existing entries
+  star: StarIcon,
+};
+```
+
+## Usage After Integration
+
+```tsx
+<Icon name="star" color="primary" size={24} />
+```
+
+## Common Patterns
+
+### Stroke Properties Conversion:
+
+- `stroke-width` → `strokeWidth`
+- `stroke-linecap` → `strokeLinecap`
+- `stroke-linejoin` → `strokeLinejoin`
+- `fill-rule` → `fillRule`
+- `clip-rule` → `clipRule`
+
+### Default Props:
+
+- Always use `size = 20` as default
+- Always use `color = 'black'` as default
+- Keep `fill="none"` on the Svg component for consistency
+
+## Validation Checklist
+
+- [ ] Component follows naming convention (`[Name]Icon.tsx`)
+- [ ] Imports correct SVG elements from `react-native-svg`
+- [ ] Uses `IconBase` interface for props
+- [ ] Size and color props are properly applied
+- [ ] ViewBox matches original SVG
+- [ ] Color is applied to correct attributes (stroke or fill)
+- [ ] Component is exported in `src/assets/index.ts`
+- [ ] Component is imported in `Icon.tsx`
+- [ ] Entry added to `iconRegistry` with camelCase key
+- [ ] Component renders correctly with different sizes and colors

@@ -5,6 +5,7 @@ import {AppScreenProps} from '@routes';
 
 import {
   CastSectionList,
+  KeywordsList,
   MovieHeader,
   RatingModal,
   RecommendationsList,
@@ -19,6 +20,7 @@ export function DetailsScreen({route}: AppScreenProps<'DetailsScreen'>) {
     castList,
     isLoading,
     recommendationList,
+    keywords,
     toggleFavorite,
     handleRateMovie,
   } = useDetailsScreen(route.params.movie.id.toString());
@@ -38,6 +40,7 @@ export function DetailsScreen({route}: AppScreenProps<'DetailsScreen'>) {
         onToggleFavorite={toggleFavorite}
         onOpenRating={handleOpenRating}
       />
+      <KeywordsList title="Palavras-chave" keywords={keywords} />
       <CastSectionList
         title="Elenco Principal"
         id={movie.id}
