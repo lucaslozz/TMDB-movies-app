@@ -4,3 +4,4 @@ export * from './HomeScreen/HomeScreen';
 export * from './SearchScreen/SearchScreen';
 export * from './AllListScreen/AllListScreen';
 export * from './CastDetailsScreen';
+export * from './MoviesKeywordScreen';

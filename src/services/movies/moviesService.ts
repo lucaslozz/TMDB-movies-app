@@ -103,6 +103,19 @@ async function rateMovie(movieId: string, rating: number): Promise<void> {
   await api.post(`${MOVIE_BASE_URL}${movieId}/rating`, {value: rating});
 }
 
+async function searchMovies(query: string, page: number): Promise<Page<Movie>> {
+  const {data} = await api.get<PageAPI<Movie>>('search/movie', {
+    params: {
+      query,
+      include_adult: false,
+      language: 'en-US',
+      page,
+    },
+  });
+
+  return apiAdapter.toPageModel(data, movie => movie);
+}
+
 export const moviesService = {
   nowPlayingList,
   popularList,
@@ -114,4 +127,5 @@ export const moviesService = {
   upcomingList,
   topRatedList,
   getMovieKeywords,
+  searchMovies,
 };

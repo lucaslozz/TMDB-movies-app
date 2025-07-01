@@ -23,8 +23,10 @@ export function {ScreenName}Screen({route}: AppScreenProps<'{ScreenName}Screen'>
   const {} = use{ScreenName}Screen();
 
   return (
-    <ScreenView>
-      {/* Screen content */}
+   <ScreenView canGoBack>
+      return {
+        // Return content
+        };  
     </ScreenView>
   );
 }

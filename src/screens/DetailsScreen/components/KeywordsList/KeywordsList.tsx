@@ -1,9 +1,11 @@
 import React from 'react';
 import {FlatList, ListRenderItemInfo} from 'react-native';
 
+import {useNavigation} from '@react-navigation/native';
 import {Keyword} from '@services';
 
-import {Box, Text} from '@components';
+import {Box, Text, TouchableOpacityBox} from '@components';
+import {AppScreenProps} from '@routes';
 
 interface KeywordsListProps {
   keywords: Keyword[];
@@ -15,17 +17,25 @@ interface KeywordItemProps {
 }
 
 function KeywordItem({keyword}: KeywordItemProps) {
+  const navigation =
+    useNavigation<AppScreenProps<'MoviesKeywordScreen'>['navigation']>();
+
+  const handlePress = () => {
+    navigation.navigate('MoviesKeywordScreen', {keyword: keyword.name});
+  };
+
   return (
-    <Box
+    <TouchableOpacityBox
       backgroundColor="backgroundContrast"
       paddingHorizontal="s12"
       paddingVertical="s8"
       borderRadius="s16"
-      marginRight="s8">
+      marginRight="s8"
+      onPress={handlePress}>
       <Text preset="paragraphSmall" color="primaryContrast">
         {keyword.name}
       </Text>
-    </Box>
+    </TouchableOpacityBox>
   );
 }
 

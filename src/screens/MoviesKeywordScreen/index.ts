@@ -1,0 +1,1 @@
+export {MoviesKeywordScreen} from './MoviesKeywordScreen';

@@ -51,4 +51,10 @@ export const movieQueries = {
       queryFn: () => moviesService.topRatedList(1),
       staleTime: oneHour,
     }),
+  searchMovies: (query: string, page: number) =>
+    queryOptions({
+      queryKey: ['searchMovies', query, page],
+      queryFn: () => moviesService.searchMovies(query, page),
+      staleTime: 1000 * 60 * 5,
+    }),
 };
