@@ -8,6 +8,7 @@ import {
   MinusIcon,
   PlusIcon,
   SearchIcon,
+  StarFillIcon,
 } from '@assets';
 
 import {useAppTheme} from '@hooks';
@@ -52,6 +53,7 @@ const iconRegistry = {
   arrowLeft: ArrowLeftIcon,
   plus: PlusIcon,
   minus: MinusIcon,
+  starFill: StarFillIcon,
 };
 
 type IconType = typeof iconRegistry;

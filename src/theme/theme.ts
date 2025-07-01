@@ -18,6 +18,8 @@ export const palette = {
   greenSuccess: '#4ABC86',
 
   redError: '#EA3838',
+
+  gold: '#FFD700',
 };
 
 export const theme = createTheme({
@@ -39,6 +41,8 @@ export const theme = createTheme({
 
     success: palette.greenSuccess,
     error: palette.redError,
+
+    gold: palette.gold,
   },
   spacing: {
     s4: 4,

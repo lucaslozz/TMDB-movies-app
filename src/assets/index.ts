@@ -4,3 +4,4 @@ export * from './icons/SearchIcon';
 export * from './icons/ArrowLeftIcon';
 export * from './icons/PlusIcon';
 export * from './icons/MinusIcon';
+export * from './icons/StarFillIcon';

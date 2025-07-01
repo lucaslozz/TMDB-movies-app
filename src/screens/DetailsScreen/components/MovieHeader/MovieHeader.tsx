@@ -8,7 +8,7 @@ import {LinearGradient} from 'expo-linear-gradient';
 import moment from 'moment';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 
-import {Box} from '@components';
+import {Box, Icon} from '@components';
 import {useAppSafeArea} from '@hooks';
 
 import {ImageView} from '../ImageView/ImageView';
@@ -122,7 +122,7 @@ export function MovieHeader({
               {'User\nScore'}
             </Text>
             <TouchableOpacity onPress={onOpenRating} style={{marginLeft: 8}}>
-              <Ionicons name="star" size={24} color="#FFD700" />
+              <Icon name="starFill" size={24} color="gold" />
             </TouchableOpacity>
           </Box>
           {movie.overview && (
