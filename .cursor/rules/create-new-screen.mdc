@@ -1,0 +1,124 @@
+---
+description: Standardized pattern for creating new screens in the TMDB React Native app
+globs: 
+alwaysApply: false
+---
+create-new-screen: Standardized pattern for creating new screens in the TMDB React Native app
+
+## Rule Overview
+When given a screen name, automatically add "Screen" suffix and implement all necessary files following established patterns.
+
+## Implementation Steps
+
+### 1. Screen Component Creation
+File: `src/screens/{ScreenName}Screen/{ScreenName}Screen.tsx`
+
+```typescript
+import React from 'react';
+import {AppScreenProps} from '@routes';
+import {ScreenView} from '@components';
+import {use{ScreenName}Screen} from './use{ScreenName}Screen';
+
+export function {ScreenName}Screen({route}: AppScreenProps<'{ScreenName}Screen'>) {
+  const {} = use{ScreenName}Screen();
+
+  return (
+    <ScreenView>
+      {/* Screen content */}
+    </ScreenView>
+  );
+}
+```
+
+### 2. Custom Hook Creation  
+File: `src/screens/{ScreenName}Screen/use{ScreenName}Screen.ts`
+
+```typescript
+import {useNavigation} from '@react-navigation/native';
+
+interface Use{ScreenName}ScreenResult {
+  // Define return type properties
+}
+
+export function use{ScreenName}Screen(): Use{ScreenName}ScreenResult {
+  const navigation = useNavigation();
+
+  return {
+    // Return values
+  };
+}
+```
+
+### 3. Index Export File
+File: `src/screens/{ScreenName}Screen/index.ts`
+
+```typescript
+export {{ScreenName}Screen} from './{ScreenName}Screen';
+```
+
+### 4. Route Integration
+**In `src/routes/AppStack.tsx`:**
+
+Add props interface (if parameters needed):
+```typescript
+export interface {ScreenName}ScreenProps {
+  // Define props based on requirements
+}
+```
+
+Add to AppStackParamList:
+```typescript
+export type AppStackParamList = {
+  // ... existing routes
+  {ScreenName}Screen: {ScreenName}ScreenProps; // or {} if no props
+};
+```
+
+Add Stack.Screen:
+```typescript
+<Stack.Screen name="{ScreenName}Screen" component={{ScreenName}Screen} />
+```
+
+Add import:
+```typescript
+import {{ScreenName}Screen} from '@screens';
+```
+
+### 5. Screen Export
+**In `src/screens/index.ts`:**
+```typescript
+export * from './{ScreenName}Screen';
+```
+
+## Parameter Patterns
+
+### No Parameters:
+```typescript
+// AppStack.tsx
+{ScreenName}Screen: {};
+
+// Component
+export function {ScreenName}Screen({route}: AppScreenProps<'{ScreenName}Screen'>) {
+```
+
+### With Parameters:
+```typescript
+// AppStack.tsx  
+export interface {ScreenName}ScreenProps {
+  paramName: ParamType;
+}
+
+// Component
+export function {ScreenName}Screen({route}: AppScreenProps<'{ScreenName}Screen'>) {
+  const {paramName} = route.params;
+  const {} = use{ScreenName}Screen(paramName);
+```
+
+## Key Requirements
+- Use ScreenView as base container
+- Create and use custom hook use{ScreenName}Screen
+- Add scrollable prop to ScreenView if scrolling needed
+- Follow TypeScript interface patterns
+- Use @components path aliases
+- Keep logic in hooks, presentation in components
+- Follow existing React Query patterns for data fetching
