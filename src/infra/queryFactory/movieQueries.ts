@@ -33,4 +33,10 @@ export const movieQueries = {
       queryFn: () => moviesService.getWatchlistMovies(page),
       staleTime: oneHour,
     }),
+  upcoming: () =>
+    queryOptions({
+      queryKey: ['upcoming'],
+      queryFn: () => moviesService.upcomingList(1),
+      staleTime: oneHour,
+    }),
 };

@@ -7,12 +7,17 @@ import {HorizontalList} from './components';
 import {useHomeScreen} from './useHomeScreen';
 
 export function HomeScreen() {
-  const {nowPlaying, popularList, isLoading, onNavigateToAllListScreen} =
-    useHomeScreen();
+  const {
+    nowPlaying,
+    popularList,
+    upcomingList,
+    isLoading,
+    onNavigateToAllListScreen,
+  } = useHomeScreen();
 
   if (isLoading) return null;
   return (
-    <ScreenView>
+    <ScreenView scrollable>
       <HorizontalList
         title="Tendências"
         movies={nowPlaying ?? []}
@@ -32,6 +37,18 @@ export function HomeScreen() {
           onNavigateToAllListScreen(
             moviesService.popularList,
             QueryKeys.INFINITY_POPULAR,
+          )
+        }
+        marginBottom="s32"
+      />
+
+      <HorizontalList
+        title="Próximos Lançamentos"
+        movies={upcomingList ?? []}
+        onSeeAllPress={() =>
+          onNavigateToAllListScreen(
+            moviesService.upcomingList,
+            QueryKeys.INFINITY_UPCOMING,
           )
         }
       />

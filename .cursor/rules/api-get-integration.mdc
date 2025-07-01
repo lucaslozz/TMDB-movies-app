@@ -1,0 +1,96 @@
+---
+description: Standardized pattern for implementing API integrations (GET) in the TMDB app
+globs: 
+alwaysApply: false
+---
+### Service Template
+```typescript
+import {api} from '@api';
+import {Page} from '@types';
+import {apiAdapter} from '@api/apiAdapter';
+import {PageAPI} from '@api/apiTypes';
+
+export async function serviceFunction(page: number): Promise<Page<DataType>> {
+  const {data} = await api.get<PageAPI<DataType>>('endpoint', {
+    params: {page},
+  });
+  
+  return apiAdapter.toPageModel(data, item => item);
+}
+```
+
+->
+
+### Service Template
+```typescript
+import {api} from '@api';
+import {Page} from '@types';
+import {apiAdapter} from '@api/apiAdapter';
+import {PageAPI} from '@api/apiTypes';
+
+export async function serviceFunction(page: number): Promise<Page<DataType>> {
+  const {data} = await api.get<PageAPI<DataType>>('endpoint', {
+    params: {page},
+  });
+  
+  return apiAdapter.toPageModel(data, item => item);
+}
+```
+
+## API Integration Workflow
+### When implementing API integration, follow this exact pattern:
+
+1. **Service Layer** (if not exists):
+   - Create service in `src/services/[entity]/[entity]Service.ts`
+   - Use the existing service pattern with proper TypeScript
+   - Export through `src/services/[entity]/index.ts`
+
+2. **Query Factory** (if not exists):
+   - Create query in `src/infra/queryFactory/[entity]Queries.ts`
+   - Use stale time: `staleTime: 1000 * 60 * 5` (5 minutes)
+   - Follow existing query key patterns
+
+3. **Screen Hook**:
+   - Use `useQuery` for single queries
+   - Use `useQueries` for multiple queries with combined loading state
+   - Expose only data and loading states
+   - Keep UI logic separate from data fetching
+
+### Single Query Pattern:
+```typescript
+// In useScreenName.ts
+const {data, isLoading} = useQuery(entityQueries.entityList(params));
+```
+
+### Multiple Queries Pattern:
+```typescript
+// In useScreenName.ts
+const {entityList, otherData, isLoading} = useQueries({
+  queries: [
+    entityQueries.entityList(params),
+    otherQueries.otherData(params),
+  ],
+  combine(result) {
+    return {
+      entityList: result[0].data?.data ?? [],
+      otherData: result[1].data?.data ?? [],
+      isLoading: result.some(query => query.isLoading),
+    };
+  },
+});
+```
+
+### Hook Interface:
+```typescript
+interface UseScreenNameResult {
+  data: EntityType[];
+  isLoading: boolean;
+  // Only expose data and loading states
+  // No UI logic or navigation
+}
+```
+
+### Screen Component:
+- Use the hook for data and loading states
+- Handle UI rendering and interactions
+- Keep presentation logic separate from data logic

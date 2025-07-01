@@ -1,0 +1,343 @@
+# TMDB Movies App - Cursor Rules
+
+## Project Overview
+This is a React Native Expo app using TypeScript, Restyle for theming, React Query for data fetching, and React Navigation for routing. The app follows a clean architecture pattern with clear separation of concerns.
+
+## File Structure & Naming Conventions
+
+### Directory Structure
+- Use the existing directory structure as a template
+- Components go in `src/components/`
+- Screens go in `src/screens/`
+- Services go in `src/services/`
+- Hooks go in `src/hooks/`
+- Types go in `src/@types/`
+- API-related code goes in `src/api/`
+- Routes go in `src/routes/`
+- Theme goes in `src/theme/`
+
+### File Naming
+- Use PascalCase for component files: `MovieCard.tsx`
+- Use camelCase for utility files: `useHomeScreen.ts`
+- Use kebab-case for directories: `BottomSheet/`
+- Always use `.tsx` extension for React components
+- Use `.ts` extension for TypeScript files without JSX
+
+### Component Structure
+- Each component should have its own directory with an `index.ts` file
+- Complex components should have a `components/` subdirectory
+- Use the pattern: `ComponentName/ComponentName.tsx` + `index.ts`
+
+## TypeScript & Code Style
+
+### Type Definitions
+- Always define proper TypeScript interfaces for props
+- Use the existing type patterns from `@types/`
+- Extend existing interfaces when possible
+- Use generic types for reusable components
+- Follow the naming convention: `ComponentNameProps`
+
+### Import Organization
+- Group imports in this order:
+  1. React imports
+  2. Third-party library imports
+  3. Internal imports (using path aliases)
+  4. Relative imports
+- Use path aliases defined in `tsconfig.json`:
+  - `@components` for components
+  - `@theme` for theme
+  - `@screens` for screens
+  - `@hooks` for hooks
+  - `@services` for services
+  - `@types` for types
+  - `@assets` for assets
+  - `@routes` for routes
+  - `@api` for API
+
+### Component Patterns
+- Use functional components with hooks
+- Follow the pattern: props interface, component function, export
+- Use destructuring for props
+- Provide default values where appropriate
+- Use proper TypeScript generics for reusable components
+
+## Styling & Theming
+
+### Restyle Theme Usage
+- Always use the theme from `@shopify/restyle`
+- Use theme colors: `palette.midnightBlue`, `palette.charcoal`, etc.
+- Use theme spacing: `s4`, `s8`, `s12`, `s16`, `s20`, `s24`, `s32`, `s40`, `s48`, `s56`
+- Use theme border radius: `s8`, `s12`, `s16`, `sAll`
+- Use the `$shadowProps` for consistent shadows
+
+### Component Styling
+- Use the `Box` component as the base for layout
+- Use `TouchableOpacityBox` for touchable elements
+- Apply styles through props, not inline styles
+- Use the theme spacing and colors consistently
+- Follow the existing button preset pattern for consistent styling
+
+## Data Management
+
+### React Query Patterns
+- Use the `usePaginatedList` hook for paginated data
+- Follow the existing query key patterns from `infra/queryKeys/`
+- Use proper TypeScript generics for query results
+- Handle loading, error, and success states consistently
+
+### API Integration
+- Use the existing `api` instance from `@api`
+- Follow the service pattern: function that returns Promise<Page<Data>>
+- Use the `apiAdapter.toPageModel` for data transformation
+- Handle API responses consistently with proper error handling
+
+### Service Layer
+- Services should be in `src/services/`
+- Each service should have its own directory with model and service files
+- Use the existing service patterns for consistency
+- Export services through index files
+
+## Navigation
+
+### React Navigation
+- Use the existing navigation structure
+- Follow the type patterns for screen props
+- Use proper TypeScript for navigation params
+- Keep navigation logic in the routes directory
+
+### Screen Components
+- Use the `ScreenView` component as the base
+- Follow the existing screen patterns
+- Use custom hooks for screen logic (e.g., `useHomeScreen`)
+- Keep screens focused on presentation, logic in hooks
+
+## Component Development
+
+### Component Architecture
+- Use composition over inheritance
+- Create reusable components with proper TypeScript interfaces
+- Use the existing component patterns (Button, Box, Text, Icon)
+- Follow the preset pattern for component variants
+
+### Custom Hooks
+- Create custom hooks for reusable logic
+- Use the `use` prefix for hook names
+- Keep hooks focused and single-purpose
+- Use proper TypeScript for hook return types
+
+### State Management
+- Use React Query for server state
+- Use local state for UI state
+- Use Zustand for global state if needed
+- Follow the existing state management patterns
+
+## Error Handling
+
+### API Errors
+- Handle API errors gracefully
+- Use proper error boundaries
+- Show user-friendly error messages
+- Log errors appropriately
+
+### Type Safety
+- Use strict TypeScript configuration
+- Avoid `any` types
+- Use proper type guards
+- Validate data at runtime when necessary
+
+## Performance
+
+### Optimization
+- Use React.memo for expensive components
+- Use useMemo and useCallback appropriately
+- Implement proper list virtualization for large lists
+- Use React Query's caching effectively
+
+### Loading States
+- Use the `LoadingIndicator` component
+- Show loading states for async operations
+- Use shimmer placeholders for content loading
+- Handle loading states consistently across the app
+
+## Testing & Quality
+
+### Code Quality
+- Follow ESLint rules
+- Use Prettier for code formatting
+- Write self-documenting code
+- Use meaningful variable and function names
+
+### Documentation
+- Use JSDoc comments for complex functions
+- Document component props with TypeScript interfaces
+- Keep README files updated
+- Document API integration patterns
+
+## Asset Management
+
+### Icons & Images
+- Use SVG icons from the assets directory
+- Follow the existing icon component pattern
+- Use proper image optimization
+- Handle image loading states
+
+### Fonts
+- Use the Satoshi font family
+- Follow the existing font configuration
+- Use proper font weights and styles
+
+## Development Workflow
+
+### Git Practices
+- Use meaningful commit messages
+- Follow conventional commit format
+- Keep commits focused and atomic
+- Use feature branches for new development
+
+### Code Review
+- Review for TypeScript correctness
+- Check for proper error handling
+- Verify component reusability
+- Ensure consistent styling
+
+## Common Patterns to Follow
+
+### List Components
+- Use the existing `HorizontalList` and `VerticalList` patterns
+- Implement proper pagination
+- Handle empty states
+- Use shimmer loading states
+
+### Modal & Bottom Sheet
+- Use the existing `BottomSheet` component
+- Follow the modal patterns
+- Handle modal state properly
+- Use proper accessibility
+
+### Search Functionality
+- Use the existing search patterns
+- Implement proper debouncing
+- Handle search results appropriately
+- Use proper keyboard handling
+
+## Anti-Patterns to Avoid
+
+- Don't use inline styles
+- Don't create components without proper TypeScript interfaces
+- Don't ignore loading and error states
+- Don't use `any` types
+- Don't create deeply nested component hierarchies
+- Don't duplicate existing functionality
+- Don't ignore the theme system
+- Don't create components without considering reusability
+
+## Quick Reference
+
+### Component Template
+```typescript
+import React from 'react';
+import {Box} from '@components';
+
+interface ComponentNameProps {
+  // Define props here
+}
+
+export function ComponentName({}: ComponentNameProps) {
+  return (
+    <Box>
+      {/* Component content */}
+    </Box>
+  );
+}
+```
+
+### Hook Template
+```typescript
+import {useState, useEffect} from 'react';
+
+interface UseHookNameResult {
+  // Define return type
+}
+
+export function useHookName(): UseHookNameResult {
+  // Hook logic
+  return {
+    // Return values
+  };
+}
+```
+
+### Service Template
+```typescript
+import {api} from '@api';
+import {Page} from '@types';
+import {apiAdapter} from '@api/apiAdapter';
+import {PageAPI} from '@api/apiTypes';
+
+export async function serviceFunction(page: number): Promise<Page<DataType>> {
+  const {data} = await api.get<PageAPI<DataType>>('endpoint', {
+    params: {page},
+  });
+  
+  return apiAdapter.toPageModel(data, item => item);
+}
+```
+
+## API Integration Workflow
+
+### When implementing API integration, follow this exact pattern:
+
+1. **Service Layer** (if not exists):
+   - Create service in `src/services/[entity]/[entity]Service.ts`
+   - Use the existing service pattern with proper TypeScript
+   - Export through `src/services/[entity]/index.ts`
+
+2. **Query Factory** (if not exists):
+   - Create query in `src/infra/queryFactory/[entity]Queries.ts`
+   - Use stale time: `staleTime: 1000 * 60 * 5` (5 minutes)
+   - Follow existing query key patterns
+
+3. **Screen Hook**:
+   - Use `useQuery` for single queries
+   - Use `useQueries` for multiple queries with combined loading state
+   - Expose only data and loading states
+   - Keep UI logic separate from data fetching
+
+### Single Query Pattern:
+```typescript
+// In useScreenName.ts
+const {data, isLoading} = useQuery(entityQueries.entityList(params));
+```
+
+### Multiple Queries Pattern:
+```typescript
+// In useScreenName.ts
+const {entityList, otherData, isLoading} = useQueries({
+  queries: [
+    entityQueries.entityList(params),
+    otherQueries.otherData(params),
+  ],
+  combine(result) {
+    return {
+      entityList: result[0].data?.data ?? [],
+      otherData: result[1].data?.data ?? [],
+      isLoading: result.some(query => query.isLoading),
+    };
+  },
+});
+```
+
+### Hook Interface:
+```typescript
+interface UseScreenNameResult {
+  data: EntityType[];
+  isLoading: boolean;
+  // Only expose data and loading states
+  // No UI logic or navigation
+}
+```
+
+### Screen Component:
+- Use the hook for data and loading states
+- Handle UI rendering and interactions
+- Keep presentation logic separate from data logic 

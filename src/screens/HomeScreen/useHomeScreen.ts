@@ -7,8 +7,20 @@ import {movieQueries} from 'infra';
 export function useHomeScreen() {
   const navigation = useNavigation();
 
-  const queries = useQueries({
-    queries: [movieQueries.nowPlaying(), movieQueries.popular()],
+  const {nowPlaying, popularList, upcomingList, isLoading} = useQueries({
+    queries: [
+      movieQueries.nowPlaying(),
+      movieQueries.popular(),
+      movieQueries.upcoming(),
+    ],
+    combine(result) {
+      return {
+        nowPlaying: result[0].data?.data ?? [],
+        popularList: result[1].data?.data ?? [],
+        upcomingList: result[2].data?.data ?? [],
+        isLoading: result.some(query => query.isLoading),
+      };
+    },
   });
 
   function onNavigateToAllListScreen(
@@ -22,9 +34,10 @@ export function useHomeScreen() {
   }
 
   return {
-    nowPlaying: queries[0].data?.data,
-    popularList: queries[1].data?.data,
-    isLoading: queries.some(query => query.isLoading),
+    nowPlaying,
+    popularList,
+    upcomingList,
+    isLoading,
     onNavigateToAllListScreen,
   };
 }
